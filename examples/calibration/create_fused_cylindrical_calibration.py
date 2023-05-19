@@ -17,4 +17,5 @@ def example_fused_cylindrical_calibration():
         cut_angles_degree=cut_angles_degree,
         vertical_fov_degree=70,
         horizontal_fov_degree=90.0,
+        max_altitude_angle_degree=90.0,
     )
