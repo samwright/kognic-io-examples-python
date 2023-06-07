@@ -7,6 +7,7 @@ from examples.calibration.create_kannala_calibration import unity_kannala_calibr
 from examples.calibration.create_fisheye_calibration import unity_fisheye_calibration
 from examples.calibration.create_pinhole_calibration import unity_pinhole_calibration
 from examples.calibration.create_principal_point_distortion_calibration import unity_principal_point_distortion_calibration
+from examples.calibration.create_principal_point_fisheye_calibration import unity_principal_point_fisheye_calibration
 from examples.calibration.create_lidar_calibration import unity_lidar_calibration
 from examples.calibration.create_cylindrical_calibration import example_cylindrical_calibration
 from examples.calibration.create_fused_cylindrical_calibration import example_fused_cylindrical_calibration
@@ -25,6 +26,7 @@ def create_sensor_calibration(external_id, lidar_sources: List[str] = None, came
         unity_pinhole_calibration(),
         unity_fisheye_calibration(),
         unity_principal_point_distortion_calibration(),
+        unity_principal_point_fisheye_calibration(),
         example_cylindrical_calibration(),
         example_fused_cylindrical_calibration(),
     ]
