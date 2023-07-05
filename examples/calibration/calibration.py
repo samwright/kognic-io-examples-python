@@ -26,7 +26,8 @@ def create_sensor_calibration(external_id, lidar_sources: List[str] = None, came
         unity_pinhole_calibration(),
         unity_fisheye_calibration(),
         unity_principal_point_distortion_calibration(),
-        unity_principal_point_fisheye_calibration(),
+        # principal point fisheye is still being reworked as of 2023-07-03
+        # unity_principal_point_fisheye_calibration(),
         example_cylindrical_calibration(),
         example_fused_cylindrical_calibration(),
     ]
