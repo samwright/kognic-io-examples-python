@@ -18,7 +18,7 @@ def run(
     client: IOC.KognicIOClient,
     project: str,
     annotation_types: Optional[List[str]] = None,
-    dryrun: bool = False,
+    dryrun: bool = True,
     pre_annotation: Optional[OpenLabelAnnotation] = None
 ) -> Optional[dict]:
     print("Creating Lidar and Camera Sequence Input with OpenLabel pre-annotations...")
@@ -80,6 +80,8 @@ def run(
 
     # Create Scene but not input since we don't provide project or batch
     scene_response = client.lidars_and_cameras_sequence.create(lidars_and_cameras_seq, annotation_types=annotation_types, dryrun=dryrun)
+    if dryrun:
+        return scene_response
     wait_for_scene_job(client=client, scene_uuid=scene_response.input_uuid)
 
     # Create some pre-annotations using the OpenLabel model.

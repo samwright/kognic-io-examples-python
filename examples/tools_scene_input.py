@@ -18,7 +18,7 @@ def run(
     client: IOC.KognicIOClient,
     project: str,
     annotation_types: Optional[List[str]] = None,
-    dryrun: bool = False,
+    dryrun: bool = True,
     include_preannotations: bool = True,
 ) -> Generator[InputCreationResult, None, None]:
     with_without = "with" if include_preannotations else "without"
