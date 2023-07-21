@@ -97,7 +97,7 @@ def run(
                     objects={object_uuid_1: object_1}
                 )
             },
-            objects={object_uuid_1: OLA.Object(name=object_uuid_1, type='StarDestroyer', object_data=OLA.ObjectData())},
+            objects={object_uuid_1: OLA.Object(name=object_uuid_1, type='SpaceShip', object_data=OLA.ObjectData())},
             metadata=OLA.Metadata(schema_version='1.0.0'),
             streams={
                 lidar_sensor1: OLA.Stream(type=OLA.StreamTypes.lidar),
@@ -131,7 +131,7 @@ def run(
                     objects={object_uuid_2: object_2}
                 )
             },
-            objects={object_uuid_2: OLA.Object(name=object_uuid_2, type='StarDestroyer', object_data=OLA.ObjectData())},
+            objects={object_uuid_2: OLA.Object(name=object_uuid_2, type='SpaceShip', object_data=OLA.ObjectData())},
             metadata=OLA.Metadata(schema_version='1.0.0'),
             streams={
                 lidar_sensor1: OLA.Stream(type=OLA.StreamTypes.lidar),
