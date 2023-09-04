@@ -5,13 +5,14 @@ from datetime import datetime
 from typing import List, Optional
 from uuid import uuid4
 
+from kognic.openlabel.models import OpenLabelAnnotation
+
 import kognic.io.client as IOC
 import kognic.io.model.input.lidars_and_cameras as LC
 import kognic.io.model.input.resources as ResourceModel
 from examples.calibration.calibration import create_sensor_calibration
 from examples.utils import wait_for_scene_job
 from kognic.io.logger import setup_logging
-from kognic.openlabel.models import OpenLabelAnnotation
 
 
 def run(
@@ -19,7 +20,7 @@ def run(
     project: str,
     annotation_types: Optional[List[str]] = None,
     dryrun: bool = True,
-    pre_annotation: Optional[OpenLabelAnnotation] = None
+    pre_annotation: Optional[OpenLabelAnnotation] = None,
 ) -> Optional[dict]:
     print("Creating Lidar and Camera Sequence Input with OpenLabel pre-annotations...")
 
@@ -49,11 +50,11 @@ def run(
                 ResourceModel.Image(
                     filename=examples_path + "/resources/img_RFC02.jpg",
                     sensor_name=cam_sensor2,
-                )
+                ),
             ],
         ),
         calibration_id=created_calibration.id,
-        metadata=metadata
+        metadata=metadata,
     )
 
     # Create Scene but not input since we don't provide project or batch
@@ -72,7 +73,7 @@ def run(
     return create_input_resp
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     setup_logging(level="INFO")
     client = IOC.KognicIOClient()
 

@@ -1,7 +1,10 @@
-from kognic.io.model.calibration.camera.kannala_calibration import KannalaCalibration, KannalaDistortionCoefficients, \
-    UndistortionCoefficients
-from kognic.io.model.calibration.common import Position, RotationQuaternion
 from kognic.io.model.calibration.camera.common import CameraMatrix
+from kognic.io.model.calibration.camera.kannala_calibration import (
+    KannalaCalibration,
+    KannalaDistortionCoefficients,
+    UndistortionCoefficients,
+)
+from kognic.io.model.calibration.common import Position, RotationQuaternion
 
 
 def unity_kannala_calibration():
@@ -18,5 +21,5 @@ def unity_kannala_calibration():
         undistortion_coefficients=camera_undistortion_coefficients,
         image_height=1080,
         image_width=1920,
-        field_of_view=180.0
+        field_of_view=180.0,
     )

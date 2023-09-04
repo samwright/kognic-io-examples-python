@@ -15,12 +15,8 @@ from kognic.io.logger import setup_logging
 
 
 def run(
-    client: IOC.KognicIOClient,
-    project: str,
-    annotation_types: Optional[List[str]] = None,
-    dryrun: bool = True
+    client: IOC.KognicIOClient, project: str, annotation_types: Optional[List[str]] = None, dryrun: bool = True
 ) -> InputModel.CreateInputResponse:
-
     print("Creating Lidar and Camera Sequence Input...")
 
     lidar_sensor1 = "RFL01"
@@ -37,7 +33,7 @@ def run(
     # Generate IMU data
     ONE_MILLISECOND = 1000000  # one millisecond, expressed in nanos
     start_ts = 1648200140000000000
-    end_ts = start_ts + 10*ONE_MILLISECOND
+    end_ts = start_ts + 10 * ONE_MILLISECOND
     imu_data = create_dummy_imu_data(start_timestamp=start_ts, end_timestamp=end_ts, samples_per_sec=1000)
 
     lidars_and_cameras_seq = LCSM.LidarsAndCamerasSequence(
@@ -56,21 +52,21 @@ def run(
                         filename=examples_path + "/resources/img_RFC01.jpg",
                         sensor_name=cam_sensor1,
                         metadata=ResourceModel.ImageMetadata(
-                            shutter_time_start_ns=start_ts + 0.5*ONE_MILLISECOND, shutter_time_end_ns=start_ts + 1.5*ONE_MILLISECOND
-                        )
+                            shutter_time_start_ns=start_ts + 0.5 * ONE_MILLISECOND, shutter_time_end_ns=start_ts + 1.5 * ONE_MILLISECOND
+                        ),
                     ),
                     ResourceModel.Image(
                         filename=examples_path + "/resources/img_RFC02.jpg",
                         sensor_name=cam_sensor2,
                         metadata=ResourceModel.ImageMetadata(
-                            shutter_time_start_ns=start_ts + 0.5*ONE_MILLISECOND, shutter_time_end_ns=start_ts + 1.5*ONE_MILLISECOND
-                        )
-                    )
+                            shutter_time_start_ns=start_ts + 0.5 * ONE_MILLISECOND, shutter_time_end_ns=start_ts + 1.5 * ONE_MILLISECOND
+                        ),
+                    ),
                 ],
             ),
             LCSM.Frame(
                 frame_id="2",
-                unix_timestamp=start_ts + 5*ONE_MILLISECOND,
+                unix_timestamp=start_ts + 5 * ONE_MILLISECOND,
                 relative_timestamp=4,
                 point_clouds=[
                     ResourceModel.PointCloud(filename=examples_path + "/resources/point_cloud_RFL11.csv", sensor_name=lidar_sensor1),
@@ -81,22 +77,22 @@ def run(
                         filename=examples_path + "/resources/img_RFC11.jpg",
                         sensor_name=cam_sensor1,
                         metadata=ResourceModel.ImageMetadata(
-                            shutter_time_start_ns=start_ts + 4.5*ONE_MILLISECOND, shutter_time_end_ns=start_ts + 5.5*ONE_MILLISECOND
-                        )
+                            shutter_time_start_ns=start_ts + 4.5 * ONE_MILLISECOND, shutter_time_end_ns=start_ts + 5.5 * ONE_MILLISECOND
+                        ),
                     ),
                     ResourceModel.Image(
                         filename=examples_path + "/resources/img_RFC12.jpg",
                         sensor_name=cam_sensor2,
                         metadata=ResourceModel.ImageMetadata(
-                            shutter_time_start_ns=start_ts + 4.5*ONE_MILLISECOND, shutter_time_end_ns=start_ts + 5.5*ONE_MILLISECOND
-                        )
+                            shutter_time_start_ns=start_ts + 4.5 * ONE_MILLISECOND, shutter_time_end_ns=start_ts + 5.5 * ONE_MILLISECOND
+                        ),
                     ),
-                ]
+                ],
             ),
         ],
         calibration_id=created_calibration.id,
         metadata=metadata,
-        imu_data=imu_data
+        imu_data=imu_data,
     )
     # Add input
     return client.lidars_and_cameras_sequence.create(
@@ -104,7 +100,7 @@ def run(
     )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     setup_logging(level="INFO")
     client = IOC.KognicIOClient()
 

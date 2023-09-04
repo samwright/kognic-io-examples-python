@@ -1,5 +1,6 @@
-from kognic.io.model.calibration.lidar.lidar_calibration import LidarCalibration, LidarFieldOfView
 from kognic.io.model.calibration.common import Position, RotationQuaternion
+from kognic.io.model.calibration.lidar.lidar_calibration import LidarCalibration, LidarFieldOfView
+
 
 def unity_lidar_calibration():
     lidar_position = Position(x=0.0, y=0.0, z=0.0)

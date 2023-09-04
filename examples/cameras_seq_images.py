@@ -28,7 +28,7 @@ def run(client: IOC.KognicIOClient, project: str, annotation_types: Optional[Lis
                     InputModel.Image(filename="./examples/resources/img_RFC01.jpg", sensor_name=sensor1),
                     InputModel.Image(filename="./examples/resources/img_RFC02.jpg", sensor_name=sensor2),
                 ],
-                metadata={'dut_status': 'active'}
+                metadata={"dut_status": "active"},
             ),
             CamerasSeqModel.Frame(
                 frame_id="2",
@@ -38,7 +38,7 @@ def run(client: IOC.KognicIOClient, project: str, annotation_types: Optional[Lis
                     InputModel.Image(filename="./examples/resources/img_RFC11.png", sensor_name=sensor1),
                     InputModel.Image(filename="./examples/resources/img_RFC12.png", sensor_name=sensor2),
                 ],
-                metadata={'dut_status': 'active'}
+                metadata={"dut_status": "active"},
             ),
             CamerasSeqModel.Frame(
                 frame_id="3",
@@ -48,7 +48,7 @@ def run(client: IOC.KognicIOClient, project: str, annotation_types: Optional[Lis
                     InputModel.Image(filename="./examples/resources/img_RFC21.webp", sensor_name=sensor1),
                     InputModel.Image(filename="./examples/resources/img_RFC22.webp", sensor_name=sensor2),
                 ],
-                metadata={'dut_status': 'active'}
+                metadata={"dut_status": "active"},
             ),
             CamerasSeqModel.Frame(
                 frame_id="4",
@@ -58,7 +58,7 @@ def run(client: IOC.KognicIOClient, project: str, annotation_types: Optional[Lis
                     InputModel.Image(filename="./examples/resources/img_RFC31.webp", sensor_name=sensor1),
                     InputModel.Image(filename="./examples/resources/img_RFC32.webp", sensor_name=sensor2),
                 ],
-                metadata={'dut_status': 'active'}
+                metadata={"dut_status": "active"},
             ),
             CamerasSeqModel.Frame(
                 frame_id="5",
@@ -68,17 +68,17 @@ def run(client: IOC.KognicIOClient, project: str, annotation_types: Optional[Lis
                     InputModel.Image(filename="./examples/resources/img_RFC41.webp", sensor_name=sensor1),
                     InputModel.Image(filename="./examples/resources/img_RFC42.webp", sensor_name=sensor2),
                 ],
-                metadata={'dut_status': 'active'}
-            )
+                metadata={"dut_status": "active"},
+            ),
         ],
-        metadata=metadata
+        metadata=metadata,
     )
 
     # Add input
     return client.cameras_sequence.create(cameras_sequence, project=project, annotation_types=annotation_types, dryrun=dryrun)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     setup_logging(level="INFO")
     # Project - Available via `client.project.get_projects()`
     project = "<project-identifier>"

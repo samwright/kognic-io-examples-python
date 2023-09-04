@@ -26,7 +26,7 @@ def run(client: IOC.KognicIOClient, project: Optional[str], dryrun: bool = True)
                 video_frames=[
                     InputModel.VideoFrame(filename="./examples/resources/video_RFC01.mp4", sensor_name=sensor1, video_timestamp=0),
                     InputModel.VideoFrame(filename="./examples/resources/video_RFC02.mp4", sensor_name=sensor2, video_timestamp=0),
-                ]
+                ],
             ),
             CamerasSeqModel.Frame(
                 frame_id="2",
@@ -35,17 +35,17 @@ def run(client: IOC.KognicIOClient, project: Optional[str], dryrun: bool = True)
                     InputModel.VideoFrame(filename="./examples/resources/video_RFC01.mp4", sensor_name=sensor1, video_timestamp=100),
                     InputModel.VideoFrame(filename="./examples/resources/video_RFC02.mp4", sensor_name=sensor2, video_timestamp=100),
                 ],
-                metadata={'dut_status': 'active'}
-            )
+                metadata={"dut_status": "active"},
+            ),
         ],
-        metadata=metadata
+        metadata=metadata,
     )
 
     # Add input
     return client.cameras_sequence.create(cameras_sequence, project=project, dryrun=dryrun)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     setup_logging(level="INFO")
 
     # Project - Available via `client.project.get_projects()`

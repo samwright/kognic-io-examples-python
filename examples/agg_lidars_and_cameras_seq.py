@@ -16,12 +16,8 @@ from kognic.io.model.input.metadata.metadata import MetaData
 
 
 def run(
-    client: IOC.KognicIOClient,
-    project: str,
-    annotation_types: Optional[List[str]] = None,
-    dryrun: bool = True
+    client: IOC.KognicIOClient, project: str, annotation_types: Optional[List[str]] = None, dryrun: bool = True
 ) -> InputModel.CreateInputResponse:
-
     print("Creating Lidar and Camera Sequence Input...")
 
     lidar_sensor1 = "lidar"
@@ -45,12 +41,12 @@ def run(
                 ],
                 images=[
                     ResourceModel.Image(filename="./examples/resources/img_RFC01.jpg", sensor_name=cam_sensor1),
-                    ResourceModel.Image(filename="./examples/resources/img_RFC02.jpg", sensor_name=cam_sensor2)
+                    ResourceModel.Image(filename="./examples/resources/img_RFC02.jpg", sensor_name=cam_sensor2),
                 ],
-                metadata={'dut_status': 'active'},
+                metadata={"dut_status": "active"},
                 ego_vehicle_pose=EgoVehiclePose(
                     position=Position(x=1.0, y=1.0, z=1.0), rotation=RotationQuaternion(w=0.01, x=1.01, y=1.01, z=1.01)
-                )
+                ),
             ),
             ALCSM.Frame(
                 frame_id="2",
@@ -60,30 +56,29 @@ def run(
                 ],
                 images=[
                     ResourceModel.Image(filename="./examples/resources/img_RFC11.jpg", sensor_name=cam_sensor1),
-                    ResourceModel.Image(filename="./examples/resources/img_RFC12.jpg", sensor_name=cam_sensor2)
+                    ResourceModel.Image(filename="./examples/resources/img_RFC12.jpg", sensor_name=cam_sensor2),
                 ],
                 ego_vehicle_pose=EgoVehiclePose(
                     position=Position(x=2.0, y=2.0, z=2.0), rotation=RotationQuaternion(w=0.01, x=2.01, y=2.01, z=2.01)
-                )
+                ),
             ),
             ALCSM.Frame(
                 frame_id="3",
                 relative_timestamp=1000,
                 point_clouds=[
-                    ResourceModel.PointCloud(filename="./examples/resources/point_cloud_RFL02.csv",
-                                             sensor_name=lidar_sensor1),
+                    ResourceModel.PointCloud(filename="./examples/resources/point_cloud_RFL02.csv", sensor_name=lidar_sensor1),
                 ],
                 images=[
                     ResourceModel.Image(filename="./examples/resources/img_RFC11.jpg", sensor_name=cam_sensor1),
-                    ResourceModel.Image(filename="./examples/resources/img_RFC12.jpg", sensor_name=cam_sensor2)
+                    ResourceModel.Image(filename="./examples/resources/img_RFC12.jpg", sensor_name=cam_sensor2),
                 ],
                 ego_vehicle_pose=EgoVehiclePose(
                     position=Position(x=3.0, y=3.0, z=3.0), rotation=RotationQuaternion(w=0.01, x=2.01, y=2.01, z=2.01)
-                )
-            )
+                ),
+            ),
         ],
         calibration_id=created_calibration.id,
-        metadata=metadata
+        metadata=metadata,
     )
     # Add input
     return client.aggregated_lidars_and_cameras_seq.create(
@@ -91,7 +86,7 @@ def run(
     )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     setup_logging(level="INFO")
     client = IOC.KognicIOClient()
 

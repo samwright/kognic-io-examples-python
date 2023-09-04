@@ -1,5 +1,5 @@
 from kognic.io.model.calibration.camera.common import CameraMatrix
-from kognic.io.model.calibration.camera.fused_cylindrical_calibration import FusedCylindricalCalibration, CutAngles
+from kognic.io.model.calibration.camera.fused_cylindrical_calibration import CutAngles, FusedCylindricalCalibration
 from kognic.io.model.calibration.common import Position, RotationQuaternion
 
 

@@ -1,7 +1,8 @@
 from __future__ import absolute_import
 
-from kognic.io.client import KognicIOClient
 from typing import Generator, Optional
+
+from kognic.io.client import KognicIOClient
 from kognic.io.logger import setup_logging
 from kognic.io.model.annotation.client_annotation import Annotation
 
@@ -11,7 +12,7 @@ def run(client: KognicIOClient, project: str, annotation_type: str, batch: Optio
     return annotations
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     setup_logging(level="INFO")
     client = KognicIOClient()
 

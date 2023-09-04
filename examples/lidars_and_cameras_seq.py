@@ -8,9 +8,9 @@ import kognic.io.client as IOC
 import kognic.io.model.input as InputModel
 import kognic.io.model.input.lidars_and_cameras_sequence as LCSM
 import kognic.io.model.input.resources as ResourceModel
+from examples.calibration.calibration import create_sensor_calibration
 from kognic.io.logger import setup_logging
 from kognic.io.model.input.metadata.metadata import MetaData
-from examples.calibration.calibration import create_sensor_calibration
 
 
 def run(client: IOC.KognicIOClient, project: Optional[str], dryrun: bool = True) -> Optional[InputModel.CreateInputResponse]:
@@ -37,9 +37,9 @@ def run(client: IOC.KognicIOClient, project: Optional[str], dryrun: bool = True)
                 ],
                 images=[
                     ResourceModel.Image(filename="./examples/resources/img_RFC01.jpg", sensor_name=cam_sensor1),
-                    ResourceModel.Image(filename="./examples/resources/img_RFC02.jpg", sensor_name=cam_sensor2)
+                    ResourceModel.Image(filename="./examples/resources/img_RFC02.jpg", sensor_name=cam_sensor2),
                 ],
-                metadata={'dut_status': 'active'}
+                metadata={"dut_status": "active"},
             ),
             LCSM.Frame(
                 frame_id="2",
@@ -49,19 +49,19 @@ def run(client: IOC.KognicIOClient, project: Optional[str], dryrun: bool = True)
                 ],
                 images=[
                     ResourceModel.Image(filename="./examples/resources/img_RFC11.jpg", sensor_name=cam_sensor1),
-                    ResourceModel.Image(filename="./examples/resources/img_RFC12.jpg", sensor_name=cam_sensor2)
+                    ResourceModel.Image(filename="./examples/resources/img_RFC12.jpg", sensor_name=cam_sensor2),
                 ],
-                metadata={'dut_status': 'active'}
-            )
+                metadata={"dut_status": "active"},
+            ),
         ],
         calibration_id=created_calibration.id,
-        metadata=metadata
+        metadata=metadata,
     )
     # Add input
     return client.lidars_and_cameras_sequence.create(lidars_and_cameras_seq, project=project, dryrun=dryrun)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     setup_logging(level="INFO")
     client = IOC.KognicIOClient()
 

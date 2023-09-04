@@ -15,10 +15,7 @@ from kognic.io.resources.input.file_data import FileData
 
 
 def run(
-    client: IOC.KognicIOClient,
-    project: Optional[str],
-    annotation_types: Optional[List[str]] = None,
-    dryrun: bool = True
+    client: IOC.KognicIOClient, project: Optional[str], annotation_types: Optional[List[str]] = None, dryrun: bool = True
 ) -> InputModel.CreateInputResponse:
     annotation_types = annotation_types or []
     print("Creating Lidars And Cameras Input with data from alternative sources...")
@@ -55,18 +52,18 @@ def run(
             point_clouds=[InputModel.PointCloud(filename=pc_name, sensor_name=lidar_sensor1)],
             images=[
                 InputModel.Image(filename=img1_name, file_data=img1_data, sensor_name=cam_sensor1),
-                InputModel.Image(filename=img2_name, file_data=img2_data, sensor_name=cam_sensor2)
-            ]
+                InputModel.Image(filename=img2_name, file_data=img2_data, sensor_name=cam_sensor2),
+            ],
         ),
         calibration_id=created_calibration.id,
-        metadata=metadata
+        metadata=metadata,
     )
 
     # Add input
     return client.lidar_and_cameras.create(lidars_and_cameras, project=project, annotation_types=annotation_types, dryrun=dryrun)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     setup_logging(level="INFO")
     client = IOC.KognicIOClient()
 

@@ -1,6 +1,7 @@
-from kognic.io import model as IAM
 from typing import List
+
 import kognic.io.client as IOC
+from kognic.io import model as IAM
 
 
 def run(client: IOC.KognicIOClient) -> List[IAM.Project]:
@@ -9,7 +10,7 @@ def run(client: IOC.KognicIOClient) -> List[IAM.Project]:
     return client.project.get_projects()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     client = IOC.KognicIOClient()
     projects = run(client)
 

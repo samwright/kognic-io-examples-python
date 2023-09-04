@@ -1,27 +1,23 @@
 from __future__ import absolute_import
 
-from typing import List, Optional
 from datetime import datetime
+from typing import List, Optional
 from uuid import uuid4
 
 import kognic.io.client as IOC
 import kognic.io.model.input as InputModel
 import kognic.io.model.input.lidars_and_cameras_sequence as LCSM
 import kognic.io.model.input.resources as ResourceModel
+from examples.calibration.calibration import create_sensor_calibration
 from kognic.io.logger import setup_logging
 from kognic.io.model.calibration import Position, RotationQuaternion
 from kognic.io.model.ego import EgoVehiclePose
 from kognic.io.model.input.metadata.metadata import MetaData
-from examples.calibration.calibration import create_sensor_calibration
 
 
 def run(
-    client: IOC.KognicIOClient,
-    project: str,
-    annotation_types: Optional[List[str]] = None,
-    dryrun: bool = True
+    client: IOC.KognicIOClient, project: str, annotation_types: Optional[List[str]] = None, dryrun: bool = True
 ) -> InputModel.CreateInputResponse:
-
     print("Creating Lidar and Camera Sequence Input...")
 
     lidar_sensor1 = "lidar"
@@ -45,12 +41,12 @@ def run(
                 ],
                 images=[
                     ResourceModel.Image(filename="./examples/resources/img_RFC01.jpg", sensor_name=cam_sensor1),
-                    ResourceModel.Image(filename="./examples/resources/img_RFC02.jpg", sensor_name=cam_sensor2)
+                    ResourceModel.Image(filename="./examples/resources/img_RFC02.jpg", sensor_name=cam_sensor2),
                 ],
-                metadata={'dut_status': 'active'},
+                metadata={"dut_status": "active"},
                 ego_vehicle_pose=EgoVehiclePose(
                     position=Position(x=1.0, y=1.0, z=1.0), rotation=RotationQuaternion(w=0.01, x=1.01, y=1.01, z=1.01)
-                )
+                ),
             ),
             LCSM.Frame(
                 frame_id="2",
@@ -60,15 +56,15 @@ def run(
                 ],
                 images=[
                     ResourceModel.Image(filename="./examples/resources/img_RFC11.jpg", sensor_name=cam_sensor1),
-                    ResourceModel.Image(filename="./examples/resources/img_RFC12.jpg", sensor_name=cam_sensor2)
+                    ResourceModel.Image(filename="./examples/resources/img_RFC12.jpg", sensor_name=cam_sensor2),
                 ],
                 ego_vehicle_pose=EgoVehiclePose(
                     position=Position(x=2.0, y=2.0, z=2.0), rotation=RotationQuaternion(w=0.01, x=2.01, y=2.01, z=2.01)
-                )
-            )
+                ),
+            ),
         ],
         calibration_id=created_calibration.id,
-        metadata=metadata
+        metadata=metadata,
     )
     # Add input
     return client.lidars_and_cameras_sequence.create(
@@ -76,7 +72,7 @@ def run(
     )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     setup_logging(level="INFO")
     client = IOC.KognicIOClient()
 

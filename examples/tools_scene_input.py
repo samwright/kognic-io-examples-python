@@ -2,16 +2,17 @@ from __future__ import absolute_import
 
 import os.path
 from datetime import datetime
-from typing import List, Optional, Generator
+from typing import Generator, List, Optional
 from uuid import uuid4
+
+import kognic.openlabel.models as OLA
 
 import kognic.io.client as IOC
 import kognic.io.model.input.lidars_and_cameras_sequence as LCS
 import kognic.io.model.input.resources as ResourceModel
-import kognic.openlabel.models as OLA
 from examples.calibration.calibration import create_sensor_calibration
 from kognic.io.logger import setup_logging
-from kognic.io.tools.input_creation import create_inputs, SceneWithPreAnnotation, InputCreationResult
+from kognic.io.tools.input_creation import InputCreationResult, SceneWithPreAnnotation, create_inputs
 
 
 def run(
@@ -39,7 +40,7 @@ def run(
         external_id=f"LCS-with-pre-annotation-example-{uuid4()}",
         frames=[
             LCS.Frame(
-                frame_id='1',
+                frame_id="1",
                 relative_timestamp=0,
                 point_clouds=[
                     ResourceModel.PointCloud(filename=examples_path + "/resources/point_cloud_RFL01.csv", sensor_name=lidar_sensor1),
@@ -48,17 +49,17 @@ def run(
                 images=[
                     ResourceModel.Image(filename=examples_path + "/resources/img_RFC01.jpg", sensor_name=cam_sensor1),
                     ResourceModel.Image(filename=examples_path + "/resources/img_RFC02.jpg", sensor_name=cam_sensor2),
-                ]
+                ],
             )
         ],
         calibration_id=created_calibration.id,
-        metadata=metadata
+        metadata=metadata,
     )
     lidars_and_cameras_2 = LCS.LidarsAndCamerasSequence(
         external_id=f"LCS-with-pre-annotation-example-{uuid4()}",
         frames=[
             LCS.Frame(
-                frame_id='1',
+                frame_id="1",
                 relative_timestamp=0,
                 point_clouds=[
                     ResourceModel.PointCloud(filename=examples_path + "/resources/point_cloud_RFL11.csv", sensor_name=lidar_sensor1),
@@ -67,20 +68,20 @@ def run(
                 images=[
                     ResourceModel.Image(filename=examples_path + "/resources/img_RFC11.jpg", sensor_name=cam_sensor1),
                     ResourceModel.Image(filename=examples_path + "/resources/img_RFC12.jpg", sensor_name=cam_sensor2),
-                ]
+                ],
             )
         ],
         calibration_id=created_calibration.id,
-        metadata=metadata
+        metadata=metadata,
     )
 
     object_1 = OLA.Objects(
         object_data=OLA.ObjectData(
             cuboid=[
                 OLA.Cuboid(
-                    attributes=OLA.Attributes(text=[OLA.Text(name='stream', val=lidar_sensor1)]),
-                    name='cuboid-1',
-                    val=[0, 0, 0, 0, -0.7071067811865476, 0.7071067811865476, 0, 1, 1, 1]
+                    attributes=OLA.Attributes(text=[OLA.Text(name="stream", val=lidar_sensor1)]),
+                    name="cuboid-1",
+                    val=[0, 0, 0, 0, -0.7071067811865476, 0.7071067811865476, 0, 1, 1, 1],
                 )
             ]
         )
@@ -90,21 +91,21 @@ def run(
         openlabel=OLA.Openlabel(
             frame_intervals=[],
             frames={
-                '0': OLA.Frame(
+                "0": OLA.Frame(
                     frame_properties=OLA.FrameProperties(
-                        streams={lidar_sensor1: {}, lidar_sensor2: {}, cam_sensor1: {}, cam_sensor2: {}}, timestamp=0, external_id='1'
+                        streams={lidar_sensor1: {}, lidar_sensor2: {}, cam_sensor1: {}, cam_sensor2: {}}, timestamp=0, external_id="1"
                     ),
-                    objects={object_uuid_1: object_1}
+                    objects={object_uuid_1: object_1},
                 )
             },
-            objects={object_uuid_1: OLA.Object(name=object_uuid_1, type='SpaceShip', object_data=OLA.ObjectData())},
-            metadata=OLA.Metadata(schema_version='1.0.0'),
+            objects={object_uuid_1: OLA.Object(name=object_uuid_1, type="SpaceShip", object_data=OLA.ObjectData())},
+            metadata=OLA.Metadata(schema_version="1.0.0"),
             streams={
                 lidar_sensor1: OLA.Stream(type=OLA.StreamTypes.lidar),
                 lidar_sensor2: OLA.Stream(type=OLA.StreamTypes.lidar),
                 cam_sensor1: OLA.Stream(type=OLA.StreamTypes.camera),
-                cam_sensor2: OLA.Stream(type=OLA.StreamTypes.camera)
-            }
+                cam_sensor2: OLA.Stream(type=OLA.StreamTypes.camera),
+            },
         )
     )
 
@@ -112,9 +113,9 @@ def run(
         object_data=OLA.ObjectData(
             cuboid=[
                 OLA.Cuboid(
-                    attributes=OLA.Attributes(text=[OLA.Text(name='stream', val=lidar_sensor1)]),
-                    name='cuboid-1',
-                    val=[0, 0, 0, 0, -0.7071067811865476, 0.7071067811865476, 0, 1, 1, 1]
+                    attributes=OLA.Attributes(text=[OLA.Text(name="stream", val=lidar_sensor1)]),
+                    name="cuboid-1",
+                    val=[0, 0, 0, 0, -0.7071067811865476, 0.7071067811865476, 0, 1, 1, 1],
                 )
             ]
         )
@@ -124,21 +125,21 @@ def run(
         openlabel=OLA.Openlabel(
             frame_intervals=[],
             frames={
-                '0': OLA.Frame(
+                "0": OLA.Frame(
                     frame_properties=OLA.FrameProperties(
-                        streams={lidar_sensor1: {}, lidar_sensor2: {}, cam_sensor1: {}, cam_sensor2: {}}, timestamp=0, external_id='1'
+                        streams={lidar_sensor1: {}, lidar_sensor2: {}, cam_sensor1: {}, cam_sensor2: {}}, timestamp=0, external_id="1"
                     ),
-                    objects={object_uuid_2: object_2}
+                    objects={object_uuid_2: object_2},
                 )
             },
-            objects={object_uuid_2: OLA.Object(name=object_uuid_2, type='SpaceShip', object_data=OLA.ObjectData())},
-            metadata=OLA.Metadata(schema_version='1.0.0'),
+            objects={object_uuid_2: OLA.Object(name=object_uuid_2, type="SpaceShip", object_data=OLA.ObjectData())},
+            metadata=OLA.Metadata(schema_version="1.0.0"),
             streams={
                 lidar_sensor1: OLA.Stream(type=OLA.StreamTypes.lidar),
                 lidar_sensor2: OLA.Stream(type=OLA.StreamTypes.lidar),
                 cam_sensor1: OLA.Stream(type=OLA.StreamTypes.camera),
-                cam_sensor2: OLA.Stream(type=OLA.StreamTypes.camera)
-            }
+                cam_sensor2: OLA.Stream(type=OLA.StreamTypes.camera),
+            },
         )
     )
 
@@ -152,7 +153,7 @@ def run(
     )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     setup_logging(level="INFO")
     client = IOC.KognicIOClient()
 

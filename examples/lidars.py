@@ -4,8 +4,8 @@ from uuid import uuid4
 
 import kognic.io.client as IOC
 import kognic.io.model.input as InputModel
-import kognic.io.model.input.resources as ResourceModel
 import kognic.io.model.input.lidars as lidar_model
+import kognic.io.model.input.resources as ResourceModel
 from kognic.io.logger import setup_logging
 from kognic.io.model.input.metadata.metadata import MetaData
 
@@ -21,14 +21,14 @@ def run(client: IOC.KognicIOClient, project: str, dryrun: bool = True) -> InputM
         frame=lidar_model.Frame(
             point_clouds=[ResourceModel.PointCloud(filename="./examples/resources/point_cloud_RFL01.las", sensor_name=lidar_sensor1)]
         ),
-        metadata=metadata
+        metadata=metadata,
     )
 
     # Add input
     return client.lidars.create(lidars, project=project, dryrun=dryrun)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     setup_logging(level="INFO")
     client = IOC.KognicIOClient()
 

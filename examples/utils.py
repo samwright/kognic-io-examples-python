@@ -1,7 +1,7 @@
 import time
 
 from kognic.io.client import KognicIOClient
-from kognic.io.model import InputStatus, Input
+from kognic.io.model import Input, InputStatus
 
 
 def wait_for_input_creation(client: KognicIOClient, input_uuid: str, timeout=20):

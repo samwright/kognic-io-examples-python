@@ -13,11 +13,9 @@ from kognic.io.model.input.metadata.metadata import MetaData
 base_dir = Path(__file__).parent.absolute()
 
 
-def run(client: IOC.KognicIOClient,
-        project: str,
-        annotation_types: Optional[List[str]] = None,
-        dryrun: bool = True) -> Optional[InputModel.CreateInputResponse]:
-
+def run(
+    client: IOC.KognicIOClient, project: str, annotation_types: Optional[List[str]] = None, dryrun: bool = True
+) -> Optional[InputModel.CreateInputResponse]:
     print("Creating Cameras Input...")
     cameras = build_scene(external_id=f"cameras-example-{uuid4()}")
 
@@ -38,11 +36,11 @@ def build_scene(external_id: str) -> CamerasModel.Cameras:
                 InputModel.Image(filename=str(base_dir) + "/resources/img_RFC02.jpg", sensor_name=sensor2),
             ]
         ),
-        metadata=metadata
+        metadata=metadata,
     )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     setup_logging(level="INFO")
     client = IOC.KognicIOClient()
 

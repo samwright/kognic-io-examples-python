@@ -10,7 +10,7 @@ def run(client: KognicIOClient, input_uuid: str, annotation_type: str) -> Annota
     return annotation
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     setup_logging(level="INFO")
     client = KognicIOClient()
 

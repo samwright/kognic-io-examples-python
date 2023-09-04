@@ -1,8 +1,11 @@
 from kognic.io.model.calibration.camera.common import CameraMatrix
-from kognic.io.model.calibration.camera.principal_point_distortion_calibration import (DistortionCenter, PrincipalPoint,
-                                                                                       PrincipalPointDistortionCalibration,
-                                                                                       PrincipalPointDistortionCoefficients,
-                                                                                       LensProjectionCoefficients)
+from kognic.io.model.calibration.camera.principal_point_distortion_calibration import (
+    DistortionCenter,
+    LensProjectionCoefficients,
+    PrincipalPoint,
+    PrincipalPointDistortionCalibration,
+    PrincipalPointDistortionCoefficients,
+)
 from kognic.io.model.calibration.common import Position, RotationQuaternion
 
 
@@ -24,5 +27,5 @@ def unity_principal_point_distortion_calibration():
         distortion_center=distortion_center,
         image_height=1080,
         image_width=1920,
-        field_of_view=180.0
+        field_of_view=180.0,
     )

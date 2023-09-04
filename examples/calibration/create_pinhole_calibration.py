@@ -1,6 +1,6 @@
+from kognic.io.model.calibration.camera.common import CameraMatrix, DistortionCoefficients
 from kognic.io.model.calibration.camera.pinhole_calibration import PinholeCalibration
 from kognic.io.model.calibration.common import Position, RotationQuaternion
-from kognic.io.model.calibration.camera.common import CameraMatrix, DistortionCoefficients
 
 
 def unity_pinhole_calibration():
@@ -15,5 +15,5 @@ def unity_pinhole_calibration():
         distortion_coefficients=camera_distortion_coefficients,
         image_height=1080,
         image_width=1920,
-        field_of_view=190.0
+        field_of_view=190.0,
     )

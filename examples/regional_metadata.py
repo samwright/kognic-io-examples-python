@@ -12,7 +12,6 @@ base_dir = Path(__file__).parent.absolute()
 
 
 def run() -> CamerasModel.Cameras:
-
     print("Creating Cameras Input with MetaDataContainer")
 
     sensor1 = "RFC01"
@@ -32,12 +31,12 @@ def run() -> CamerasModel.Cameras:
                 InputModel.Image(filename=str(base_dir) + "/resources/img_RFC02.jpg", sensor_name=sensor2),
             ]
         ),
-        metadata=metadata
+        metadata=metadata,
     )
 
     return cameras
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     setup_logging(level="INFO")
     print(run())

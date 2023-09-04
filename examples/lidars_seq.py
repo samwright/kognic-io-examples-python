@@ -25,7 +25,7 @@ def run(client: IOC.KognicIOClient, project: str, dryrun: bool = True) -> InputM
                 point_clouds=[
                     ResourceModel.PointCloud(filename="./examples/resources/point_cloud_RFL01.las", sensor_name=lidar_sensor1),
                 ],
-                metadata={'dut_status': 'active'}
+                metadata={"dut_status": "active"},
             ),
             LSM.Frame(
                 frame_id="2",
@@ -33,16 +33,16 @@ def run(client: IOC.KognicIOClient, project: str, dryrun: bool = True) -> InputM
                 point_clouds=[
                     ResourceModel.PointCloud(filename="./examples/resources/point_cloud_RFL02.las", sensor_name=lidar_sensor1),
                 ],
-                metadata={'dut_status': 'active'}
-            )
+                metadata={"dut_status": "active"},
+            ),
         ],
-        metadata=metadata
+        metadata=metadata,
     )
     # Add input
     return client.lidars_sequence.create(lidars_seq, project=project, dryrun=dryrun)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     setup_logging(level="INFO")
     client = IOC.KognicIOClient()
 

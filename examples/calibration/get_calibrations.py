@@ -13,6 +13,6 @@ def run(client: IOC.KognicIOClient) -> List[IAM.SensorCalibrationEntry]:
     return calibrations
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     client = IOC.KognicIOClient()
     run(client)

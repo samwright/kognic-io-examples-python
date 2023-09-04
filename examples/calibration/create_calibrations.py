@@ -18,7 +18,7 @@ def run(client: IOC.KognicIOClient, calibration_identifier: str) -> IAM.SensorCa
     return created_calibration
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     from datetime import datetime
 
     client = IOC.KognicIOClient()

@@ -14,12 +14,8 @@ from kognic.io.logger import setup_logging
 
 
 def run(
-    client: IOC.KognicIOClient,
-    project: str,
-    annotation_types: Optional[List[str]] = None,
-    dryrun: bool = True
+    client: IOC.KognicIOClient, project: str, annotation_types: Optional[List[str]] = None, dryrun: bool = True
 ) -> InputModel.CreateInputResponse:
-
     print("Creating Lidar and Camera Sequence Input...")
 
     lidar_sensor1 = "RFL01"
@@ -59,11 +55,11 @@ def run(
                     ResourceModel.PointCloud(filename=examples_path + "/resources/point_cloud_RFL11.csv", sensor_name=lidar_sensor1),
                     ResourceModel.PointCloud(filename=examples_path + "/resources/point_cloud_RFL12.csv", sensor_name=lidar_sensor2),
                 ],
-                images=[ResourceModel.Image(filename=examples_path + "/resources/img_RFC11.jpg", sensor_name=cam_sensor1)]
+                images=[ResourceModel.Image(filename=examples_path + "/resources/img_RFC11.jpg", sensor_name=cam_sensor1)],
             ),
         ],
         calibration_id=created_calibration.id,
-        metadata=metadata
+        metadata=metadata,
     )
     # Add input
     return client.lidars_and_cameras_sequence.create(
@@ -71,7 +67,7 @@ def run(
     )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     setup_logging(level="INFO")
     client = IOC.KognicIOClient()
 

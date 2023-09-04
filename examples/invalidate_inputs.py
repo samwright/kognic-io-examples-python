@@ -1,6 +1,7 @@
 from typing import List
-import kognic.io.model as IAM
+
 import kognic.io.client as IOC
+import kognic.io.model as IAM
 
 
 def run(client: IOC.KognicIOClient, input_uuid: str, invalidated_reason: IAM.InvalidatedReasonInput) -> List[IAM.Input]:
@@ -8,7 +9,7 @@ def run(client: IOC.KognicIOClient, input_uuid: str, invalidated_reason: IAM.Inv
     return client.input.invalidate_inputs(input_uuids=[input_uuid], invalidated_reason=invalidated_reason)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     client = IOC.KognicIOClient()
 
     # Input-identifier - Available via `client.input.get_inputs()`

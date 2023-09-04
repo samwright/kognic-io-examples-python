@@ -8,7 +8,7 @@ def run(client: IOC.KognicIOClient, project: str, batch: str) -> ProjectBatch:
     return client.project.create_batch(project, batch)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     client = IOC.KognicIOClient()
 
     project = "Project-Identifier"
