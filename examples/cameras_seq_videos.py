@@ -4,14 +4,14 @@ from typing import Optional
 from uuid import uuid4
 
 import kognic.io.client as IOC
-import kognic.io.model.input as InputModel
-import kognic.io.model.input.cameras_sequence as CamerasSeqModel
+import kognic.io.model.scene as SceneModel
+import kognic.io.model.scene.cameras_sequence as CamerasSeqModel
 from kognic.io.logger import setup_logging
-from kognic.io.model.input.metadata.metadata import MetaData
+from kognic.io.model.scene.metadata.metadata import MetaData
 
 
 def run(client: IOC.KognicIOClient, project: Optional[str], dryrun: bool = True):
-    print("Creating Cameras Sequence Input...")
+    print("Creating Cameras Sequence Scene...")
 
     sensor1 = "RFC01"
     sensor2 = "RFC02"
@@ -24,16 +24,16 @@ def run(client: IOC.KognicIOClient, project: Optional[str], dryrun: bool = True)
                 frame_id="1",
                 relative_timestamp=0,
                 video_frames=[
-                    InputModel.VideoFrame(filename="./examples/resources/video_RFC01.mp4", sensor_name=sensor1, video_timestamp=0),
-                    InputModel.VideoFrame(filename="./examples/resources/video_RFC02.mp4", sensor_name=sensor2, video_timestamp=0),
+                    SceneModel.VideoFrame(filename="./examples/resources/video_RFC01.mp4", sensor_name=sensor1, video_timestamp=0),
+                    SceneModel.VideoFrame(filename="./examples/resources/video_RFC02.mp4", sensor_name=sensor2, video_timestamp=0),
                 ],
             ),
             CamerasSeqModel.Frame(
                 frame_id="2",
                 relative_timestamp=500,
                 video_frames=[
-                    InputModel.VideoFrame(filename="./examples/resources/video_RFC01.mp4", sensor_name=sensor1, video_timestamp=100),
-                    InputModel.VideoFrame(filename="./examples/resources/video_RFC02.mp4", sensor_name=sensor2, video_timestamp=100),
+                    SceneModel.VideoFrame(filename="./examples/resources/video_RFC01.mp4", sensor_name=sensor1, video_timestamp=100),
+                    SceneModel.VideoFrame(filename="./examples/resources/video_RFC02.mp4", sensor_name=sensor2, video_timestamp=100),
                 ],
                 metadata={"dut_status": "active"},
             ),

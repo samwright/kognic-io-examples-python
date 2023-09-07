@@ -4,16 +4,16 @@ import os.path
 from uuid import uuid4
 
 import kognic.io.client as IOC
-import kognic.io.model.input as InputModel
-import kognic.io.model.input.lidars as lidar_model
-import kognic.io.model.input.resources as ResourceModel
+import kognic.io.model.scene as SceneModel
+import kognic.io.model.scene.lidars as lidar_model
+import kognic.io.model.scene.resources as ResourceModel
 from examples.imu_data.create_imu_data import create_dummy_imu_data
 from kognic.io.logger import setup_logging
-from kognic.io.model.input.metadata.metadata import MetaData
+from kognic.io.model.scene.metadata.metadata import MetaData
 
 
-def run(client: IOC.KognicIOClient, project: str, dryrun: bool = True) -> InputModel.CreateInputResponse:
-    print("Creating Lidars Input...")
+def run(client: IOC.KognicIOClient, project: str, dryrun: bool = True) -> SceneModel.CreateSceneResponse:
+    print("Creating Lidars Scene...")
 
     lidar_sensor1 = "lidar"
     metadata = MetaData.parse_obj({"location-lat": 27.986065, "location-long": 86.922623, "vehicle_id": "abg"})

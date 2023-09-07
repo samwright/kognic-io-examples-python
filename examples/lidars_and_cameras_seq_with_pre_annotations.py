@@ -8,8 +8,8 @@ from uuid import uuid4
 from kognic.openlabel.models import OpenLabelAnnotation
 
 import kognic.io.client as IOC
-import kognic.io.model.input.lidars_and_cameras_sequence as LCSM
-import kognic.io.model.input.resources as ResourceModel
+import kognic.io.model.scene.lidars_and_cameras_sequence as LCSM
+import kognic.io.model.scene.resources as ResourceModel
 from examples.calibration.calibration import create_sensor_calibration
 from examples.utils import wait_for_scene_job
 from kognic.io.logger import setup_logging
@@ -22,7 +22,7 @@ def run(
     dryrun: bool = True,
     pre_annotation: Optional[OpenLabelAnnotation] = None,
 ) -> Optional[dict]:
-    print("Creating Lidar and Camera Sequence Input with OpenLabel pre-annotations...")
+    print("Creating Lidar and Camera Sequence Scene with OpenLabel pre-annotations...")
 
     lidar_sensor1 = "RFL01"
     lidar_sensor2 = "RFL02"
@@ -83,14 +83,14 @@ def run(
     scene_response = client.lidars_and_cameras_sequence.create(lidars_and_cameras_seq, annotation_types=annotation_types, dryrun=dryrun)
     if dryrun:
         return scene_response
-    wait_for_scene_job(client=client, scene_uuid=scene_response.input_uuid)
+    wait_for_scene_job(client=client, scene_uuid=scene_response.scene_uuid)
 
     # Create some pre-annotations using the OpenLabel model.
     if pre_annotation is not None:
-        client.pre_annotation.create(scene_uuid=scene_response.input_uuid, pre_annotation=pre_annotation, dryrun=dryrun)
+        client.pre_annotation.create(scene_uuid=scene_response.scene_uuid, pre_annotation=pre_annotation, dryrun=dryrun)
 
     create_input_resp = client.lidars_and_cameras_sequence.create_from_scene(
-        scene_uuid=scene_response.input_uuid, annotation_types=annotation_types, project=project, dryrun=dryrun
+        scene_uuid=scene_response.scene_uuid, annotation_types=annotation_types, project=project, dryrun=dryrun
     )
     return create_input_resp
 

@@ -5,16 +5,16 @@ from typing import Optional
 from uuid import uuid4
 
 import kognic.io.client as IOC
-import kognic.io.model.input as InputModel
-import kognic.io.model.input.lidars_and_cameras_sequence as LCSM
-import kognic.io.model.input.resources as ResourceModel
+import kognic.io.model.scene as SceneModel
+import kognic.io.model.scene.lidars_and_cameras_sequence as LCSM
+import kognic.io.model.scene.resources as ResourceModel
 from examples.calibration.calibration import create_sensor_calibration
 from kognic.io.logger import setup_logging
-from kognic.io.model.input.metadata.metadata import MetaData
+from kognic.io.model.scene.metadata.metadata import MetaData
 
 
-def run(client: IOC.KognicIOClient, project: Optional[str], dryrun: bool = True) -> Optional[InputModel.CreateInputResponse]:
-    print("Creating Lidar and Camera Sequence Input...")
+def run(client: IOC.KognicIOClient, project: Optional[str], dryrun: bool = True) -> Optional[SceneModel.CreateSceneResponse]:
+    print("Creating Lidar and Camera Sequence Scene...")
 
     lidar_sensor1 = "lidar"
     cam_sensor1 = "RFC01"

@@ -4,14 +4,14 @@ from typing import List, Optional
 from uuid import uuid4
 
 import kognic.io.client as IOC
-import kognic.io.model.input as InputModel
-import kognic.io.model.input.cameras_sequence as CamerasSeqModel
+import kognic.io.model.scene as SceneModel
+import kognic.io.model.scene.cameras_sequence as CamerasSeqModel
 from kognic.io.logger import setup_logging
-from kognic.io.model.input.metadata.metadata import MetaData
+from kognic.io.model.scene.metadata.metadata import MetaData
 
 
 def run(client: IOC.KognicIOClient, project: str, annotation_types: Optional[List[str]] = None, dryrun: bool = True):
-    print("Creating Cameras Sequence Input...")
+    print("Creating Cameras Sequence Scene...")
 
     sensor1 = "RFC01"
     sensor2 = "RFC02"
@@ -25,8 +25,8 @@ def run(client: IOC.KognicIOClient, project: str, annotation_types: Optional[Lis
                 relative_timestamp=0,
                 images=[
                     # JPG Images in Frame 1
-                    InputModel.Image(filename="./examples/resources/img_RFC01.jpg", sensor_name=sensor1),
-                    InputModel.Image(filename="./examples/resources/img_RFC02.jpg", sensor_name=sensor2),
+                    SceneModel.Image(filename="./examples/resources/img_RFC01.jpg", sensor_name=sensor1),
+                    SceneModel.Image(filename="./examples/resources/img_RFC02.jpg", sensor_name=sensor2),
                 ],
                 metadata={"dut_status": "active"},
             ),
@@ -35,8 +35,8 @@ def run(client: IOC.KognicIOClient, project: str, annotation_types: Optional[Lis
                 relative_timestamp=500,
                 images=[
                     # PNG Images in Frame 2
-                    InputModel.Image(filename="./examples/resources/img_RFC11.png", sensor_name=sensor1),
-                    InputModel.Image(filename="./examples/resources/img_RFC12.png", sensor_name=sensor2),
+                    SceneModel.Image(filename="./examples/resources/img_RFC11.png", sensor_name=sensor1),
+                    SceneModel.Image(filename="./examples/resources/img_RFC12.png", sensor_name=sensor2),
                 ],
                 metadata={"dut_status": "active"},
             ),
@@ -45,8 +45,8 @@ def run(client: IOC.KognicIOClient, project: str, annotation_types: Optional[Lis
                 relative_timestamp=1000,
                 images=[
                     # WebP VP8 Images in Frame 3
-                    InputModel.Image(filename="./examples/resources/img_RFC21.webp", sensor_name=sensor1),
-                    InputModel.Image(filename="./examples/resources/img_RFC22.webp", sensor_name=sensor2),
+                    SceneModel.Image(filename="./examples/resources/img_RFC21.webp", sensor_name=sensor1),
+                    SceneModel.Image(filename="./examples/resources/img_RFC22.webp", sensor_name=sensor2),
                 ],
                 metadata={"dut_status": "active"},
             ),
@@ -55,8 +55,8 @@ def run(client: IOC.KognicIOClient, project: str, annotation_types: Optional[Lis
                 relative_timestamp=1500,
                 images=[
                     # WebP VP8L Images in Frame 4
-                    InputModel.Image(filename="./examples/resources/img_RFC31.webp", sensor_name=sensor1),
-                    InputModel.Image(filename="./examples/resources/img_RFC32.webp", sensor_name=sensor2),
+                    SceneModel.Image(filename="./examples/resources/img_RFC31.webp", sensor_name=sensor1),
+                    SceneModel.Image(filename="./examples/resources/img_RFC32.webp", sensor_name=sensor2),
                 ],
                 metadata={"dut_status": "active"},
             ),
@@ -65,8 +65,8 @@ def run(client: IOC.KognicIOClient, project: str, annotation_types: Optional[Lis
                 relative_timestamp=2000,
                 images=[
                     # WebP VP8X Images in Frame 5
-                    InputModel.Image(filename="./examples/resources/img_RFC41.webp", sensor_name=sensor1),
-                    InputModel.Image(filename="./examples/resources/img_RFC42.webp", sensor_name=sensor2),
+                    SceneModel.Image(filename="./examples/resources/img_RFC41.webp", sensor_name=sensor1),
+                    SceneModel.Image(filename="./examples/resources/img_RFC42.webp", sensor_name=sensor2),
                 ],
                 metadata={"dut_status": "active"},
             ),

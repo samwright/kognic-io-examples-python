@@ -3,16 +3,16 @@ from __future__ import absolute_import
 from pathlib import Path
 from uuid import uuid4
 
-import kognic.io.model.input as InputModel
-import kognic.io.model.input.cameras as CamerasModel
+import kognic.io.model.scene as SceneModel
+import kognic.io.model.scene.cameras as CamerasModel
 from kognic.io.logger import setup_logging
-from kognic.io.model.input.metadata.metadata import MetaData
+from kognic.io.model.scene.metadata.metadata import MetaData
 
 base_dir = Path(__file__).parent.absolute()
 
 
 def run() -> CamerasModel.Cameras:
-    print("Creating Cameras Input with MetaDataContainer")
+    print("Creating Cameras Scene with MetaDataContainer")
 
     sensor1 = "RFC01"
     sensor2 = "RFC02"
@@ -27,8 +27,8 @@ def run() -> CamerasModel.Cameras:
         external_id=f"regional-metadata-example-{uuid4()}",
         frame=CamerasModel.Frame(
             images=[
-                InputModel.Image(filename=str(base_dir) + "/resources/img_RFC01.jpg", sensor_name=sensor1),
-                InputModel.Image(filename=str(base_dir) + "/resources/img_RFC02.jpg", sensor_name=sensor2),
+                SceneModel.Image(filename=str(base_dir) + "/resources/img_RFC01.jpg", sensor_name=sensor1),
+                SceneModel.Image(filename=str(base_dir) + "/resources/img_RFC02.jpg", sensor_name=sensor2),
             ]
         ),
         metadata=metadata,

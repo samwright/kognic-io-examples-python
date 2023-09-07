@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List
 
 import kognic.io.client as IOC
 from kognic.io import model as IAM

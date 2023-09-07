@@ -6,19 +6,19 @@ from typing import List, Optional
 from uuid import uuid4
 
 import kognic.io.client as IOC
-import kognic.io.model.input as InputModel
-import kognic.io.model.input.lidars_and_cameras as LC
+import kognic.io.model.scene as SceneModel
+import kognic.io.model.scene.lidars_and_cameras as LC
 from examples.calibration.calibration import create_sensor_calibration
 from kognic.io.logger import setup_logging
-from kognic.io.model.input.metadata.metadata import MetaData
+from kognic.io.model.scene.metadata.metadata import MetaData
 from kognic.io.resources.input.file_data import FileData
 
 
 def run(
     client: IOC.KognicIOClient, project: Optional[str], annotation_types: Optional[List[str]] = None, dryrun: bool = True
-) -> InputModel.CreateInputResponse:
+) -> SceneModel.CreateSceneResponse:
     annotation_types = annotation_types or []
-    print("Creating Lidars And Cameras Input with data from alternative sources...")
+    print("Creating Lidars And Cameras Scene with data from alternative sources...")
 
     lidar_sensor1 = "lidar"
     cam_sensor1 = "RFC01"
@@ -49,10 +49,10 @@ def run(
     lidars_and_cameras = LC.LidarsAndCameras(
         external_id=f"alternative-source-{uuid4()}",
         frame=LC.Frame(
-            point_clouds=[InputModel.PointCloud(filename=pc_name, sensor_name=lidar_sensor1)],
+            point_clouds=[SceneModel.PointCloud(filename=pc_name, sensor_name=lidar_sensor1)],
             images=[
-                InputModel.Image(filename=img1_name, file_data=img1_data, sensor_name=cam_sensor1),
-                InputModel.Image(filename=img2_name, file_data=img2_data, sensor_name=cam_sensor2),
+                SceneModel.Image(filename=img1_name, file_data=img1_data, sensor_name=cam_sensor1),
+                SceneModel.Image(filename=img2_name, file_data=img2_data, sensor_name=cam_sensor2),
             ],
         ),
         calibration_id=created_calibration.id,

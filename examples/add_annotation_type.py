@@ -1,8 +1,4 @@
-from typing import List, Optional
-
 import kognic.io.client as IOC
-from kognic.io import model as IAM
-from kognic.io.model.projects import project_batch
 
 
 def run(client: IOC.KognicIOClient, input_uuid: str, annotation_type: str):
