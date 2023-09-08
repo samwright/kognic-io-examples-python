@@ -11,7 +11,7 @@ import kognic.io.model.scene.lidars_and_cameras as LC
 from examples.calibration.calibration import create_sensor_calibration
 from kognic.io.logger import setup_logging
 from kognic.io.model.scene.metadata.metadata import MetaData
-from kognic.io.resources.input.file_data import FileData
+from kognic.io.resources.scene.file_data import FileData
 
 
 def run(
