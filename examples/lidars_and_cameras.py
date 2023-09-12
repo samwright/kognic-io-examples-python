@@ -43,7 +43,7 @@ def run(
     )
 
     # Add input
-    return client.lidar_and_cameras.create(lidars_and_cameras, project=project, annotation_types=annotation_types, dryrun=dryrun)
+    return client.lidars_and_cameras.create(lidars_and_cameras, project=project, annotation_types=annotation_types, dryrun=dryrun)
 
 
 if __name__ == "__main__":

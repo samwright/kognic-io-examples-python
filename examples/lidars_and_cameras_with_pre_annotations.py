@@ -58,7 +58,7 @@ def run(
     )
 
     # Create Scene but not input since we don't provide project or batch
-    scene_response = client.lidar_and_cameras.create(lidars_and_cameras, annotation_types=annotation_types, dryrun=dryrun)
+    scene_response = client.lidars_and_cameras.create(lidars_and_cameras, annotation_types=annotation_types, dryrun=dryrun)
     if dryrun:
         return scene_response
     wait_for_scene_job(client=client, scene_uuid=scene_response.scene_uuid)
@@ -67,7 +67,7 @@ def run(
     if pre_annotation is not None:
         client.pre_annotation.create(scene_uuid=scene_response.scene_uuid, pre_annotation=pre_annotation, dryrun=dryrun)
 
-    create_input_resp = client.lidar_and_cameras.create_from_scene(
+    create_input_resp = client.lidars_and_cameras.create_from_scene(
         scene_uuid=scene_response.scene_uuid, annotation_types=annotation_types, project=project, dryrun=dryrun
     )
     return create_input_resp
