@@ -27,7 +27,7 @@ def wait_for_scene_job(client: KognicIOClient, scene_uuid: str, timeout=20) -> S
         scene = response[0]
         if scene.status in [SceneStatus.Created, SceneStatus.Failed]:
             return scene.status
-        
+
         time.sleep(1)
 
     raise Exception(f"Job was not finished: {scene_uuid}")
