@@ -1,15 +1,14 @@
 import kognic.io.client as IOC
 
 
-def run(client: IOC.KognicIOClient, input_uuid: str, annotation_type: str):
-    print("Adding annotation types to input...")
-
-    client.input.add_annotation_type(input_uuid=input_uuid, annotation_type=annotation_type)
+def run(client: IOC.KognicIOClient, scene_uuid: str, annotation_type: str):
+    print("Adding annotation types to scene...")
+    client.input.add_annotation_type(scene_uuid=scene_uuid, annotation_type=annotation_type)
 
 
 if __name__ == "__main__":
     client = IOC.KognicIOClient()
 
-    input_uuid = "<input-identifier>"
+    scene_uuid = "<scene-identifier>"
     annotation_type = "annotation-type"
-    run(client, input_uuid, annotation_type)
+    run(client, scene_uuid, annotation_type)
