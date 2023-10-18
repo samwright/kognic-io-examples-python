@@ -7,12 +7,10 @@ def run(client: IOC.KognicIOClient, calibration_identifier: str) -> IAM.SensorCa
     print("Listing Calibration...")
 
     lidar_sensor1 = "lidar"
-    cam_sensor1 = "RFC01"
-    cam_sensor2 = "RFC02"
-    cam_sensor3 = "RFC03"
+    cam_sensors = [f"RFC0{i}" for i in range(1, 9)]
 
     # Create calibration
-    calibration_spec = create_sensor_calibration(calibration_identifier, [lidar_sensor1], [cam_sensor1, cam_sensor2, cam_sensor3])
+    calibration_spec = create_sensor_calibration(calibration_identifier, [lidar_sensor1], cam_sensors)
     created_calibration = client.calibration.create_calibration(calibration_spec)
 
     return created_calibration

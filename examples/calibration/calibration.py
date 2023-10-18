@@ -1,6 +1,7 @@
 from typing import List
 
 import kognic.io.model.calibration as CalibrationModel
+from examples.calibration.create_custom_calibration import example_custom_camera_calibration
 from examples.calibration.create_cylindrical_calibration import example_cylindrical_calibration
 from examples.calibration.create_fisheye_calibration import unity_fisheye_calibration
 from examples.calibration.create_fused_cylindrical_calibration import example_fused_cylindrical_calibration
@@ -28,6 +29,7 @@ def create_sensor_calibration(external_id, lidar_sources: List[str] = None, came
         unity_principal_point_fisheye_calibration(),
         example_cylindrical_calibration(),
         example_fused_cylindrical_calibration(),
+        example_custom_camera_calibration(),
     ]
     calibration_dict = {
         **{lidar_source: unity_lidar_calibration() for lidar_source in lidar_sources},
