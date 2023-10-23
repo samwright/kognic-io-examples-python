@@ -13,6 +13,7 @@ import kognic.io.model.scene.resources as ResourceModel
 from examples.calibration.calibration import create_sensor_calibration
 from examples.utils import wait_for_scene_job
 from kognic.io.logger import setup_logging
+from kognic.io.model.input.input import Input
 
 
 def run(
@@ -21,7 +22,7 @@ def run(
     annotation_types: Optional[List[str]] = None,
     dryrun: bool = True,
     pre_annotation: Optional[OpenLabelAnnotation] = None,
-) -> Optional[dict]:
+) -> Optional[List[Input]]:
     print("Creating Lidar and Camera Sequence Scene with OpenLabel pre-annotations...")
 
     lidar_sensor1 = "RFL01"
@@ -67,10 +68,10 @@ def run(
     if pre_annotation is not None:
         client.pre_annotation.create(scene_uuid=scene_response.scene_uuid, pre_annotation=pre_annotation, dryrun=dryrun)
 
-    create_input_resp = client.lidars_and_cameras.create_from_scene(
+    created_inputs = client.lidars_and_cameras.create_from_scene(
         scene_uuid=scene_response.scene_uuid, annotation_types=annotation_types, project=project, dryrun=dryrun
     )
-    return create_input_resp
+    return created_inputs
 
 
 if __name__ == "__main__":

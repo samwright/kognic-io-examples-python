@@ -13,6 +13,7 @@ import kognic.io.model.scene.resources as ResourceModel
 from examples.calibration.calibration import create_sensor_calibration
 from examples.utils import wait_for_scene_job
 from kognic.io.logger import setup_logging
+from kognic.io.model.input.input import Input
 
 
 def run(
@@ -21,7 +22,7 @@ def run(
     annotation_types: Optional[List[str]] = None,
     dryrun: bool = True,
     pre_annotation: Optional[OpenLabelAnnotation] = None,
-) -> Optional[dict]:
+) -> Optional[List[Input]]:
     print("Creating Lidar and Camera Sequence Scene with OpenLabel pre-annotations...")
 
     lidar_sensor1 = "RFL01"
