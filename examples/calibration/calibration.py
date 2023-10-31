@@ -1,7 +1,7 @@
 from typing import List
 
 import kognic.io.model.calibration as CalibrationModel
-from examples.calibration.create_custom_calibration import example_custom_camera_calibration
+from examples.calibration.create_custom_camera_calibration import example_custom_camera_calibration
 from examples.calibration.create_cylindrical_calibration import example_cylindrical_calibration
 from examples.calibration.create_fisheye_calibration import unity_fisheye_calibration
 from examples.calibration.create_fused_cylindrical_calibration import example_fused_cylindrical_calibration
