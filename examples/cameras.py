@@ -26,7 +26,7 @@ def run(
 def build_scene(external_id: str) -> CamerasModel.Cameras:
     sensor1 = "RFC01"
     sensor2 = "RFC02"
-    metadata = MetaData.parse_obj({"location-lat": 27.986065, "location-long": 86.922623, "vehicle_id": "abg"})
+    metadata = MetaData(**{"location-lat": 27.986065, "location-long": 86.922623, "vehicle_id": "abg"})
 
     return CamerasModel.Cameras(
         external_id=external_id,

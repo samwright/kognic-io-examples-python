@@ -16,7 +16,7 @@ def run(client: IOC.KognicIOClient, project: str, dryrun: bool = True) -> SceneM
     print("Creating Lidars Scene...")
 
     lidar_sensor1 = "lidar"
-    metadata = MetaData.parse_obj({"location-lat": 27.986065, "location-long": 86.922623, "vehicle_id": "abg"})
+    metadata = MetaData(**{"location-lat": 27.986065, "location-long": 86.922623, "vehicle_id": "abg"})
 
     imu_data = create_dummy_imu_data(1557539923, 1557539925, 1e9)
     examples_path = os.path.dirname(__file__)

@@ -14,7 +14,7 @@ def run(client: IOC.KognicIOClient, project: str, dryrun: bool = True) -> SceneM
     print("Creating Lidar Sequence Scene...")
 
     lidar_sensor1 = "lidar"
-    metadata = MetaData.parse_obj({"location-lat": 27.986065, "location-long": 86.922623, "vehicle_id": "abg"})
+    metadata = MetaData(**{"location-lat": 27.986065, "location-long": 86.922623, "vehicle_id": "abg"})
 
     lidars_seq = LSM.LidarsSequence(
         external_id=f"lidars-seq-example-{uuid4()}",
