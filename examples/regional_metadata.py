@@ -18,7 +18,7 @@ def run() -> CamerasModel.Cameras:
     sensor2 = "RFC02"
 
     # A MetaData container can be created by parsing a dictionary
-    metadata = MetaData.parse_obj({"region": "EU", "location-lat": 27.986065, "location-long": 86.922623, "vehicle_id": "abg"})
+    metadata = MetaData.model_validate({"region": "EU", "location-lat": 27.986065, "location-long": 86.922623, "vehicle_id": "abg"})
 
     # It can also be created by initializing with keywords.
     metadata = MetaData(region="EU", location_lat=27.986065, location_long=86.922623, vehicle_id="abg")

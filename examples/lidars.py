@@ -14,7 +14,7 @@ def run(client: IOC.KognicIOClient, project: str, dryrun: bool = True) -> SceneM
     print("Creating Lidars Scene...")
 
     lidar_sensor1 = "lidar"
-    metadata = MetaData.parse_obj({"location-lat": 27.986065, "location-long": 86.922623, "vehicle_id": "abg"})
+    metadata = MetaData.model_validate({"location-lat": 27.986065, "location-long": 86.922623, "vehicle_id": "abg"})
 
     lidars = lidar_model.Lidars(
         external_id=f"lidars-example-{uuid4()}",

@@ -15,7 +15,7 @@ def run(client: IOC.KognicIOClient, project: Optional[str], dryrun: bool = True)
 
     sensor1 = "RFC01"
     sensor2 = "RFC02"
-    metadata = MetaData.parse_obj({"location-lat": 27.986065, "location-long": 86.922623, "vehicle_id": "abg"})
+    metadata = MetaData.model_validate({"location-lat": 27.986065, "location-long": 86.922623, "vehicle_id": "abg"})
 
     cameras_sequence = CamerasSeqModel.CamerasSequence(
         external_id=f"camera-seq-videos-example-{uuid4()}",
