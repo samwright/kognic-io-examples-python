@@ -16,7 +16,7 @@ base_dir = Path(__file__).parent.absolute()
 def run(
     client: IOC.KognicIOClient, project: str, annotation_types: Optional[List[str]] = None, dryrun: bool = True
 ) -> Optional[SceneModel.CreateSceneResponse]:
-    print("Creating Cameras Input...")
+    print("Creating Cameras Scene...")
     cameras = build_scene(external_id=f"cameras-example-{uuid4()}")
 
     # Add input

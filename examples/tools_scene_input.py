@@ -23,7 +23,7 @@ def run(
     include_preannotations: bool = True,
 ) -> Generator[InputCreationResult, None, None]:
     with_without = "with" if include_preannotations else "without"
-    print(f"Creating Lidar and Camera Input {with_without} pre-annotations...")
+    print(f"Creating Lidar and Cameras Scene {with_without} pre-annotations...")
 
     lidar_sensor1 = "RFL01"
     lidar_sensor2 = "RFL02"
