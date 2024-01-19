@@ -12,15 +12,15 @@ def example_ola_with_cuboids() -> OpenLabelAnnotation:
     frame_id1, frame_id2 = "1", "2"
 
     # Stream names must match the stream names in the scene
-    streams = build_streams(lidars=["lidar1", "lidar2"], cameras=["camera1", "camera2"])
+    streams = build_streams(lidars=["RFL01", "RFL02"], cameras=["RFC01", "RFC02"])
 
-    object1 = build_object(object_name="object1", object_class="car")
-    object2 = build_object(object_name="object2", object_class="person")
+    object1 = build_object(object_name="object1", object_class="SpaceShip")
+    object2 = build_object(object_name="object2", object_class="SpaceShip")
 
-    cuboid11 = build_cuboid(stream="lidar1", val=[1, 2, 3, 4, 5, 6, 7, 8, 9])
-    cuboid12 = build_cuboid(stream="lidar2", val=[10, 11, 12, 13, 14, 15, 16, 17, 18])
-    cuboid21 = build_cuboid(stream="lidar1", val=[19, 20, 21, 22, 23, 24, 25, 26, 27])
-    cuboid22 = build_cuboid(stream="lidar2", val=[28, 29, 30, 31, 32, 33, 34, 35, 36])
+    cuboid11 = build_cuboid(stream="RFL01", val=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    cuboid12 = build_cuboid(stream="RFL02", val=[10, 11, 12, 13, 14, 15, 16, 17, 18, 19])
+    cuboid21 = build_cuboid(stream="RFL01", val=[19, 20, 21, 22, 23, 24, 25, 26, 27, 28])
+    cuboid22 = build_cuboid(stream="RFL02", val=[28, 29, 30, 31, 32, 33, 34, 35, 36, 37])
 
     frame_object11 = build_frame_object_with_cuboid(cuboid=cuboid11)
     frame_object12 = build_frame_object_with_cuboid(cuboid=cuboid12)
@@ -34,7 +34,7 @@ def example_ola_with_cuboids() -> OpenLabelAnnotation:
     )
 
     frame2 = build_frame(
-        timestamp=1,
+        timestamp=4,
         objects={object_uuid1: frame_object21, object_uuid2: frame_object22},
         streams=streams,
     )
