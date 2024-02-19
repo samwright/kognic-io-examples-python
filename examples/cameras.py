@@ -4,45 +4,63 @@ from pathlib import Path
 from typing import List, Optional
 from uuid import uuid4
 
-import kognic.io.client as IOC
 import kognic.io.model.scene as SceneModel
 import kognic.io.model.scene.cameras as CamerasModel
+from kognic.io.client import KognicIOClient
 from kognic.io.logger import setup_logging
 from kognic.io.model.scene.metadata.metadata import MetaData
+from kognic.io.model.scene.resources import Image
 
 base_dir = Path(__file__).parent.absolute()
 
 
 def run(
-    client: IOC.KognicIOClient, project: str, annotation_types: Optional[List[str]] = None, dryrun: bool = True
+    client: KognicIOClient,
+    project: str,
+    annotation_types: Optional[List[str]] = None,
+    dryrun: bool = True,
 ) -> Optional[SceneModel.CreateSceneResponse]:
     print("Creating Cameras Scene...")
-    cameras = build_scene(external_id=f"cameras-example-{uuid4()}")
 
-    # Add input
-    return client.cameras.create(cameras, project=project, annotation_types=annotation_types, dryrun=dryrun)
+    metadata = MetaData(
+        **{
+            "location-lat": 27.986065,
+            "location-long": 86.922623,
+            "vehicle_id": "abg",
+        }
+    )
 
-
-def build_scene(external_id: str) -> CamerasModel.Cameras:
-    sensor1 = "RFC01"
-    sensor2 = "RFC02"
-    metadata = MetaData(**{"location-lat": 27.986065, "location-long": 86.922623, "vehicle_id": "abg"})
-
-    return CamerasModel.Cameras(
-        external_id=external_id,
+    cameras = CamerasModel.Cameras(
+        external_id=f"cameras-example-{uuid4()}",
         frame=CamerasModel.Frame(
             images=[
-                SceneModel.Image(filename=str(base_dir) + "/resources/img_RFC01.jpg", sensor_name=sensor1),
-                SceneModel.Image(filename=str(base_dir) + "/resources/img_RFC02.jpg", sensor_name=sensor2),
+                Image(
+                    filename=str(base_dir) + "/resources/img_RFC01.jpg",
+                    sensor_name="RFC01",
+                ),
+                Image(
+                    filename=str(base_dir) + "/resources/img_RFC02.jpg",
+                    sensor_name="RFC02",
+                ),
             ]
         ),
         metadata=metadata,
     )
 
+    # Create input
+    input = client.cameras.create(
+        cameras,
+        project=project,
+        annotation_types=annotation_types,
+        dryrun=dryrun,
+    )
+
+    return input
+
 
 if __name__ == "__main__":
     setup_logging(level="INFO")
-    client = IOC.KognicIOClient()
+    client = KognicIOClient()
 
     # Project - Available via `client.project.get_projects()`
     project = "Project-identifier"

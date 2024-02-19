@@ -1,9 +1,9 @@
-import kognic.io.client as IOC
 import kognic.io.model as IAM
 from examples.calibration.calibration import create_sensor_calibration
+from kognic.io.client import KognicIOClient
 
 
-def run(client: IOC.KognicIOClient, calibration_identifier: str) -> IAM.SensorCalibrationEntry:
+def run(client: KognicIOClient, calibration_identifier: str) -> IAM.SensorCalibrationEntry:
     print("Listing Calibration...")
 
     lidar_sensor1 = "lidar"
@@ -19,6 +19,6 @@ def run(client: IOC.KognicIOClient, calibration_identifier: str) -> IAM.SensorCa
 if __name__ == "__main__":
     from datetime import datetime
 
-    client = IOC.KognicIOClient()
+    client = KognicIOClient()
     calibration_identifier = f"calibration-{datetime.now()}"
     run(client, calibration_identifier)
