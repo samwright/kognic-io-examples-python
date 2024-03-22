@@ -21,7 +21,6 @@ def run(
     annotation_types: Optional[List[str]] = None,
     dryrun: bool = True,
 ) -> SceneModel.CreateSceneResponse:
-
     print("Creating Lidar and Camera Sequence Scene...")
 
     lidar_sensor1 = "lidar"

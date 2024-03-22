@@ -18,7 +18,6 @@ def run(
     project: Optional[str],
     dryrun: bool = True,
 ) -> Optional[SceneModel.CreateSceneResponse]:
-
     print("Creating Lidar and Camera Sequence Scene...")
 
     lidar_sensor1 = "lidar"

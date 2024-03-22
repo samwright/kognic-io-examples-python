@@ -19,7 +19,6 @@ def run(
     annotation_types: Optional[List[str]] = None,
     dryrun: bool = True,
 ) -> SceneModel.CreateSceneResponse:
-
     annotation_types = annotation_types or []
     print("Creating Lidars And Cameras Scene...")
 
