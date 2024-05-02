@@ -111,6 +111,22 @@ def run(
                 ],
                 metadata={"dut_status": "active"},
             ),
+            CameraSequenceModel.Frame(
+                frame_id="6",
+                relative_timestamp=2500,
+                images=[
+                    # AVIF Images in Frame 6
+                    Image(
+                        filename="./examples/resources/img_RFC51.avif",
+                        sensor_name=sensor1,
+                    ),
+                    Image(
+                        filename="./examples/resources/img_RFC52.avif",
+                        sensor_name=sensor2,
+                    ),
+                ],
+                metadata={"dut_status": "active"},
+            ),
         ],
         metadata=metadata,
     )
