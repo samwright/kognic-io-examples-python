@@ -8,10 +8,11 @@ from uuid import uuid4
 import kognic.io.client as IOC
 import kognic.io.model.scene as SceneModel
 import kognic.io.model.scene.lidars_and_cameras as LC
-from examples.calibration.calibration import create_sensor_calibration
 from kognic.io.logger import setup_logging
 from kognic.io.model.scene.metadata.metadata import MetaData
 from kognic.io.resources.scene.file_data import FileData
+
+from examples.calibration.calibration import create_sensor_calibration
 
 
 def run(

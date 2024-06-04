@@ -6,11 +6,12 @@ from uuid import uuid4
 
 import kognic.io.model.scene as SceneModel
 import kognic.io.model.scene.lidars_and_cameras as LidarsCamerasModel
-from examples.calibration.calibration import create_sensor_calibration
 from kognic.io.client import KognicIOClient
 from kognic.io.logger import setup_logging
 from kognic.io.model.scene.metadata.metadata import MetaData
 from kognic.io.model.scene.resources import Image, PointCloud
+
+from examples.calibration.calibration import create_sensor_calibration
 
 
 def run(

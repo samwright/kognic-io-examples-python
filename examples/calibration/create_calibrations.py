@@ -1,6 +1,7 @@
 import kognic.io.model as IAM
-from examples.calibration.calibration import create_sensor_calibration
 from kognic.io.client import KognicIOClient
+
+from examples.calibration.calibration import create_sensor_calibration
 
 
 def run(client: KognicIOClient, calibration_identifier: str) -> IAM.SensorCalibrationEntry:

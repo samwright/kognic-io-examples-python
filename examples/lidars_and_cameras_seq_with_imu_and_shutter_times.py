@@ -9,9 +9,10 @@ import kognic.io.client as IOC
 import kognic.io.model.scene as SceneModel
 import kognic.io.model.scene.lidars_and_cameras_sequence as LCSM
 import kognic.io.model.scene.resources as ResourceModel
+from kognic.io.logger import setup_logging
+
 from examples.calibration.calibration import create_sensor_calibration
 from examples.imu_data.create_imu_data import create_dummy_imu_data
-from kognic.io.logger import setup_logging
 
 
 def run(

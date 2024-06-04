@@ -7,9 +7,10 @@ import kognic.io.client as IOC
 import kognic.io.model.scene as SceneModel
 import kognic.io.model.scene.lidars as lidar_model
 import kognic.io.model.scene.resources as ResourceModel
-from examples.imu_data.create_imu_data import create_dummy_imu_data
 from kognic.io.logger import setup_logging
 from kognic.io.model.scene.metadata.metadata import MetaData
+
+from examples.imu_data.create_imu_data import create_dummy_imu_data
 
 
 def run(client: IOC.KognicIOClient, project: str, dryrun: bool = True) -> SceneModel.CreateSceneResponse:

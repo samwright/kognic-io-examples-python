@@ -6,13 +6,14 @@ from uuid import uuid4
 
 import kognic.io.model.scene as SceneModel
 import kognic.io.model.scene.aggregated_lidars_and_cameras_seq as ALCSModel
-from examples.calibration.calibration import create_sensor_calibration
 from kognic.io.client import KognicIOClient
 from kognic.io.logger import setup_logging
 from kognic.io.model.calibration import Position, RotationQuaternion
 from kognic.io.model.ego import EgoVehiclePose
 from kognic.io.model.scene.metadata.metadata import MetaData
 from kognic.io.model.scene.resources import Image, PointCloud
+
+from examples.calibration.calibration import create_sensor_calibration
 
 
 def run(

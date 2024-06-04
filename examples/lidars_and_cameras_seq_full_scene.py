@@ -8,11 +8,12 @@ import kognic.io.client as IOC
 import kognic.io.model.scene as SceneModel
 import kognic.io.model.scene.lidars_and_cameras_sequence as LCSM
 import kognic.io.model.scene.resources as ResourceModel
-from examples.calibration.calibration import create_sensor_calibration
 from kognic.io.logger import setup_logging
 from kognic.io.model.calibration import Position, RotationQuaternion
 from kognic.io.model.ego import EgoVehiclePose
 from kognic.io.model.scene.metadata.metadata import MetaData
+
+from examples.calibration.calibration import create_sensor_calibration
 
 
 def run(
