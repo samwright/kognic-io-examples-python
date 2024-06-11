@@ -4,12 +4,11 @@ from datetime import datetime
 from typing import Optional
 from uuid import uuid4
 
-import kognic.io.model.scene as SceneModel
-import kognic.io.model.scene.lidars_and_cameras_sequence as LidarsCamerasSequenceModel
+import kognic.io.model.scene.lidars_and_cameras_sequence as LCSM
 from kognic.io.client import KognicIOClient
 from kognic.io.logger import setup_logging
+from kognic.io.model import CreateSceneResponse, Image, PointCloud
 from kognic.io.model.scene.metadata.metadata import MetaData
-from kognic.io.model.scene.resources import Image, PointCloud
 
 from examples.calibration.calibration import create_sensor_calibration
 
@@ -18,7 +17,7 @@ def run(
     client: KognicIOClient,
     project: Optional[str],
     dryrun: bool = True,
-) -> Optional[SceneModel.CreateSceneResponse]:
+) -> Optional[CreateSceneResponse]:
     print("Creating Lidar and Camera Sequence Scene...")
 
     lidar_sensor1 = "lidar"
@@ -41,10 +40,10 @@ def run(
     )
     created_calibration = client.calibration.create_calibration(calibration_spec)
 
-    lidars_and_cameras_seq = LidarsCamerasSequenceModel.LidarsAndCamerasSequence(
+    lidars_and_cameras_seq = LCSM.LidarsAndCamerasSequence(
         external_id=f"LCS-example-{uuid4()}",
         frames=[
-            LidarsCamerasSequenceModel.Frame(
+            LCSM.Frame(
                 frame_id="1",
                 relative_timestamp=0,
                 point_clouds=[
@@ -65,7 +64,7 @@ def run(
                 ],
                 metadata={"dut_status": "active"},
             ),
-            LidarsCamerasSequenceModel.Frame(
+            LCSM.Frame(
                 frame_id="2",
                 relative_timestamp=100,
                 point_clouds=[
@@ -90,13 +89,8 @@ def run(
         calibration_id=created_calibration.id,
         metadata=metadata,
     )
-    # Add input
-    input = client.lidars_and_cameras_sequence.create(
-        lidars_and_cameras_seq,
-        project=project,
-        dryrun=dryrun,
-    )
-    return input
+    # Create scene
+    return client.lidars_and_cameras_sequence.create(lidars_and_cameras_seq, project=project, dryrun=dryrun)
 
 
 if __name__ == "__main__":

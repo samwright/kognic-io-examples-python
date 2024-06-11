@@ -3,19 +3,19 @@ from __future__ import absolute_import
 from typing import List, Optional
 from uuid import uuid4
 
-import kognic.io.model.scene.cameras_sequence as CameraSequenceModel
+import kognic.io.model.scene.cameras_sequence as CSM
 from kognic.io.client import KognicIOClient
 from kognic.io.logger import setup_logging
+from kognic.io.model import CreateSceneResponse, Image
 from kognic.io.model.scene.metadata.metadata import MetaData
-from kognic.io.model.scene.resources import Image
 
 
 def run(
     client: KognicIOClient,
-    project: str,
+    project: Optional[str],
     annotation_types: Optional[List[str]] = None,
     dryrun: bool = True,
-):
+) -> Optional[CreateSceneResponse]:
     print("Creating Cameras Sequence Scene...")
 
     sensor1 = "RFC01"
@@ -28,10 +28,10 @@ def run(
         }
     )
 
-    cameras_sequence = CameraSequenceModel.CamerasSequence(
+    cameras_sequence = CSM.CamerasSequence(
         external_id=f"camera-seq-images-example-{uuid4()}",
         frames=[
-            CameraSequenceModel.Frame(
+            CSM.Frame(
                 frame_id="1",
                 relative_timestamp=0,
                 images=[
@@ -47,7 +47,7 @@ def run(
                 ],
                 metadata={"dut_status": "active"},
             ),
-            CameraSequenceModel.Frame(
+            CSM.Frame(
                 frame_id="2",
                 relative_timestamp=500,
                 images=[
@@ -63,7 +63,7 @@ def run(
                 ],
                 metadata={"dut_status": "active"},
             ),
-            CameraSequenceModel.Frame(
+            CSM.Frame(
                 frame_id="3",
                 relative_timestamp=1000,
                 images=[
@@ -79,7 +79,7 @@ def run(
                 ],
                 metadata={"dut_status": "active"},
             ),
-            CameraSequenceModel.Frame(
+            CSM.Frame(
                 frame_id="4",
                 relative_timestamp=1500,
                 images=[
@@ -95,7 +95,7 @@ def run(
                 ],
                 metadata={"dut_status": "active"},
             ),
-            CameraSequenceModel.Frame(
+            CSM.Frame(
                 frame_id="5",
                 relative_timestamp=2000,
                 images=[
@@ -111,7 +111,7 @@ def run(
                 ],
                 metadata={"dut_status": "active"},
             ),
-            CameraSequenceModel.Frame(
+            CSM.Frame(
                 frame_id="6",
                 relative_timestamp=2500,
                 images=[
@@ -131,14 +131,8 @@ def run(
         metadata=metadata,
     )
 
-    # Create input
-    input = client.cameras_sequence.create(
-        cameras_sequence,
-        project=project,
-        annotation_types=annotation_types,
-        dryrun=dryrun,
-    )
-    return input
+    # Create scene
+    return client.cameras_sequence.create(cameras_sequence, project=project, annotation_types=annotation_types, dryrun=dryrun)
 
 
 if __name__ == "__main__":

@@ -5,10 +5,10 @@ from pathlib import Path
 from typing import List, Optional
 from uuid import uuid4
 
-import kognic.io.client as IOC
-import kognic.io.model.scene as SceneModel
 import kognic.io.model.scene.lidars_and_cameras as LC
+from kognic.io.client import KognicIOClient
 from kognic.io.logger import setup_logging
+from kognic.io.model import CreateSceneResponse, Image, PointCloud
 from kognic.io.model.scene.metadata.metadata import MetaData
 from kognic.io.resources.scene.file_data import FileData
 
@@ -16,8 +16,8 @@ from examples.calibration.calibration import create_sensor_calibration
 
 
 def run(
-    client: IOC.KognicIOClient, project: Optional[str], annotation_types: Optional[List[str]] = None, dryrun: bool = True
-) -> SceneModel.CreateSceneResponse:
+    client: KognicIOClient, project: Optional[str], annotation_types: Optional[List[str]] = None, dryrun: bool = True
+) -> CreateSceneResponse:
     annotation_types = annotation_types or []
     print("Creating Lidars And Cameras Scene with data from alternative sources...")
 
@@ -50,23 +50,23 @@ def run(
     lidars_and_cameras = LC.LidarsAndCameras(
         external_id=f"alternative-source-{uuid4()}",
         frame=LC.Frame(
-            point_clouds=[SceneModel.PointCloud(filename=pc_name, sensor_name=lidar_sensor1)],
+            point_clouds=[PointCloud(filename=pc_name, sensor_name=lidar_sensor1)],
             images=[
-                SceneModel.Image(filename=img1_name, file_data=img1_data, sensor_name=cam_sensor1),
-                SceneModel.Image(filename=img2_name, file_data=img2_data, sensor_name=cam_sensor2),
+                Image(filename=img1_name, file_data=img1_data, sensor_name=cam_sensor1),
+                Image(filename=img2_name, file_data=img2_data, sensor_name=cam_sensor2),
             ],
         ),
         calibration_id=created_calibration.id,
         metadata=metadata,
     )
 
-    # Add input
+    # Create scene
     return client.lidars_and_cameras.create(lidars_and_cameras, project=project, annotation_types=annotation_types, dryrun=dryrun)
 
 
 if __name__ == "__main__":
     setup_logging(level="INFO")
-    client = IOC.KognicIOClient()
+    client = KognicIOClient()
 
     # Project - Available via `client.project.get_projects()`
     project = "<project-id>"

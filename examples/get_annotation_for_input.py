@@ -6,8 +6,7 @@ from kognic.io.model.annotation.annotation import Annotation
 
 
 def run(client: KognicIOClient, input_uuid: str) -> Annotation:
-    annotation = client.annotation.get_annotation_for_input(input_uuid=input_uuid)
-    return annotation
+    return client.annotation.get_annotation_for_input(input_uuid=input_uuid)
 
 
 if __name__ == "__main__":

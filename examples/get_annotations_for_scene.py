@@ -8,8 +8,7 @@ from kognic.io.model.annotation.annotation import Annotation
 
 
 def run(client: KognicIOClient, scene_uuid: str) -> List[Annotation]:
-    annotations = client.annotation.get_annotations_for_scene(scene_uuid=scene_uuid)
-    return annotations
+    return client.annotation.get_annotations_for_scene(scene_uuid=scene_uuid)
 
 
 if __name__ == "__main__":

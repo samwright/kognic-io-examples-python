@@ -1,18 +1,15 @@
 from typing import List
 
-import kognic.io.client as IOC
-import kognic.io.model as IAM
+from kognic.io.client import KognicIOClient
+from kognic.io.model import SensorCalibrationEntry
 
 
-def run(client: IOC.KognicIOClient) -> List[IAM.SensorCalibrationEntry]:
+def run(client: KognicIOClient) -> List[SensorCalibrationEntry]:
     print("Listing Calibration...")
 
-    calibrations = client.calibration.get_calibrations()
-    print(calibrations)
-
-    return calibrations
+    return client.calibration.get_calibrations()
 
 
 if __name__ == "__main__":
-    client = IOC.KognicIOClient()
+    client = KognicIOClient()
     run(client)

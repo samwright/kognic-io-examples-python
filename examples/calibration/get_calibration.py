@@ -1,18 +1,18 @@
 from typing import List
 
-import kognic.io.client as IOC
-import kognic.io.model as IAM
+from kognic.io.client import KognicIOClient
+from kognic.io.model import SensorCalibrationEntry
 
 
-def run(client: IOC.KognicIOClient) -> List[IAM.SensorCalibrationEntry]:
+def run(client: KognicIOClient) -> List[SensorCalibrationEntry]:
     print("Get One Calibration...")
 
     calibrations = client.calibration.get_calibrations()
-    calibration = client.calibration.get_calibrations(external_id=calibrations[0].external_id)
+    calibrations = client.calibration.get_calibrations(external_id=calibrations[0].external_id)
 
-    return calibration
+    return calibrations[0]
 
 
 if __name__ == "__main__":
-    client = IOC.KognicIOClient()
+    client = KognicIOClient()
     run(client)

@@ -1,17 +1,16 @@
 from typing import List
 
-import kognic.io.client as IOC
-from kognic.io import model as IAM
+from kognic.io.client import KognicIOClient
+from kognic.io.model import ProjectBatch
 
 
-def run(client: IOC.KognicIOClient, project: str) -> List[IAM.ProjectBatch]:
+def run(client: KognicIOClient, project: str) -> List[ProjectBatch]:
     print("Listing project batches...")
-
     return client.project.get_project_batches(project)
 
 
 if __name__ == "__main__":
-    client = IOC.KognicIOClient()
+    client = KognicIOClient()
 
     project = "Project-Identifier"
     project_batches = run(client, project=project)

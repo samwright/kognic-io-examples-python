@@ -5,10 +5,10 @@ from datetime import datetime
 from typing import List, Optional
 from uuid import uuid4
 
-import kognic.io.client as IOC
 import kognic.io.model.scene.lidars_and_cameras_sequence as LCSM
-import kognic.io.model.scene.resources as ResourceModel
+from kognic.io.client import KognicIOClient
 from kognic.io.logger import setup_logging
+from kognic.io.model import Image, PointCloud
 from kognic.io.model.input.input import Input
 from kognic.openlabel.models import OpenLabelAnnotation
 
@@ -17,7 +17,7 @@ from examples.utils import wait_for_scene_job
 
 
 def run(
-    client: IOC.KognicIOClient,
+    client: KognicIOClient,
     project: str,
     annotation_types: Optional[List[str]] = None,
     dryrun: bool = True,
@@ -43,15 +43,15 @@ def run(
                 frame_id="1",
                 relative_timestamp=0,
                 point_clouds=[
-                    ResourceModel.PointCloud(filename=examples_path + "/resources/point_cloud_RFL01.csv", sensor_name=lidar_sensor1),
-                    ResourceModel.PointCloud(filename=examples_path + "/resources/point_cloud_RFL02.csv", sensor_name=lidar_sensor2),
+                    PointCloud(filename=examples_path + "/resources/point_cloud_RFL01.csv", sensor_name=lidar_sensor1),
+                    PointCloud(filename=examples_path + "/resources/point_cloud_RFL02.csv", sensor_name=lidar_sensor2),
                 ],
                 images=[
-                    ResourceModel.Image(
+                    Image(
                         filename=examples_path + "/resources/img_RFC01.jpg",
                         sensor_name=cam_sensor1,
                     ),
-                    ResourceModel.Image(
+                    Image(
                         filename=examples_path + "/resources/img_RFC02.jpg",
                         sensor_name=cam_sensor2,
                     ),
@@ -61,15 +61,15 @@ def run(
                 frame_id="2",
                 relative_timestamp=4,
                 point_clouds=[
-                    ResourceModel.PointCloud(filename=examples_path + "/resources/point_cloud_RFL11.csv", sensor_name=lidar_sensor1),
-                    ResourceModel.PointCloud(filename=examples_path + "/resources/point_cloud_RFL12.csv", sensor_name=lidar_sensor2),
+                    PointCloud(filename=examples_path + "/resources/point_cloud_RFL11.csv", sensor_name=lidar_sensor1),
+                    PointCloud(filename=examples_path + "/resources/point_cloud_RFL12.csv", sensor_name=lidar_sensor2),
                 ],
                 images=[
-                    ResourceModel.Image(
+                    Image(
                         filename=examples_path + "/resources/img_RFC11.jpg",
                         sensor_name=cam_sensor1,
                     ),
-                    ResourceModel.Image(
+                    Image(
                         filename=examples_path + "/resources/img_RFC12.jpg",
                         sensor_name=cam_sensor2,
                     ),
@@ -90,15 +90,14 @@ def run(
     if pre_annotation is not None:
         client.pre_annotation.create(scene_uuid=scene_response.scene_uuid, pre_annotation=pre_annotation, dryrun=dryrun)
 
-    create_input_resp = client.lidars_and_cameras_sequence.create_from_scene(
+    return client.lidars_and_cameras_sequence.create_from_scene(
         scene_uuid=scene_response.scene_uuid, annotation_types=annotation_types, project=project, dryrun=dryrun
     )
-    return create_input_resp
 
 
 if __name__ == "__main__":
     setup_logging(level="INFO")
-    client = IOC.KognicIOClient()
+    client = KognicIOClient()
 
     # Project - Available via `client.project.get_projects()`
     project = "<project-id>"

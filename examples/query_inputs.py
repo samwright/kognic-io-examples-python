@@ -1,16 +1,16 @@
 from typing import List, Optional
 
-import kognic.io.client as IOC
-from kognic.io import model as IAM
+from kognic.io.client import KognicIOClient
+from kognic.io.model.input import Input
 
 
-def run(client: IOC.KognicIOClient, project: Optional[str] = None, scene_uuids: Optional[List[str]] = None) -> List[IAM.Input]:
+def run(client: KognicIOClient, project: Optional[str] = None, scene_uuids: Optional[List[str]] = None) -> List[Input]:
     print("Listing inputs...")
     return client.input.query_inputs(project=project, scene_uuids=scene_uuids)
 
 
 if __name__ == "__main__":
-    client = IOC.KognicIOClient()
+    client = KognicIOClient()
 
     # Project - Available via `client.project.get_projects()`
     project = "Project-identifier"

@@ -8,8 +8,7 @@ from kognic.io.model.annotation.client_annotation import Annotation
 
 
 def run(client: KognicIOClient, project: str, annotation_type: str, batch: Optional[str] = None) -> Generator[Annotation, None, None]:
-    annotations = client.annotation.get_project_annotations(project=project, batch=batch, annotation_type=annotation_type)
-    return annotations
+    yield from client.annotation.get_project_annotations(project=project, batch=batch, annotation_type=annotation_type)
 
 
 if __name__ == "__main__":

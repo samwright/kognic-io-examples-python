@@ -1,24 +1,19 @@
 from __future__ import absolute_import
 
 from datetime import datetime
-from typing import List, Optional
+from typing import Optional
 from uuid import uuid4
 
-import kognic.io.client as IOC
-import kognic.io.model.scene as SceneModel
 import kognic.io.model.scene.lidars_and_cameras_sequence as LCSM
-import kognic.io.model.scene.resources as ResourceModel
+from kognic.io.client import KognicIOClient
 from kognic.io.logger import setup_logging
-from kognic.io.model.calibration import Position, RotationQuaternion
-from kognic.io.model.ego import EgoVehiclePose
+from kognic.io.model import CreateSceneResponse, EgoVehiclePose, Image, PointCloud, Position, RotationQuaternion
 from kognic.io.model.scene.metadata.metadata import MetaData
 
 from examples.calibration.calibration import create_sensor_calibration
 
 
-def run(
-    client: IOC.KognicIOClient, annotation_types: Optional[List[str]] = None, dryrun: bool = True
-) -> Optional[SceneModel.CreateSceneResponse]:
+def run(client: KognicIOClient, dryrun: bool = True) -> Optional[CreateSceneResponse]:
     print("Creating Lidar and Camera Sequence Scene...")
 
     lidar_sensor1 = "lidar"
@@ -38,11 +33,11 @@ def run(
                 frame_id="1",
                 relative_timestamp=0,
                 point_clouds=[
-                    ResourceModel.PointCloud(filename="./examples/resources/point_cloud_RFL01.las", sensor_name=lidar_sensor1),
+                    PointCloud(filename="./examples/resources/point_cloud_RFL01.las", sensor_name=lidar_sensor1),
                 ],
                 images=[
-                    ResourceModel.Image(filename="./examples/resources/img_RFC01.jpg", sensor_name=cam_sensor1),
-                    ResourceModel.Image(filename="./examples/resources/img_RFC02.jpg", sensor_name=cam_sensor2),
+                    Image(filename="./examples/resources/img_RFC01.jpg", sensor_name=cam_sensor1),
+                    Image(filename="./examples/resources/img_RFC02.jpg", sensor_name=cam_sensor2),
                 ],
                 metadata={"dut_status": "active"},
                 ego_vehicle_pose=EgoVehiclePose(
@@ -53,11 +48,11 @@ def run(
                 frame_id="2",
                 relative_timestamp=500,
                 point_clouds=[
-                    ResourceModel.PointCloud(filename="./examples/resources/point_cloud_RFL02.las", sensor_name=lidar_sensor1),
+                    PointCloud(filename="./examples/resources/point_cloud_RFL02.las", sensor_name=lidar_sensor1),
                 ],
                 images=[
-                    ResourceModel.Image(filename="./examples/resources/img_RFC11.jpg", sensor_name=cam_sensor1),
-                    ResourceModel.Image(filename="./examples/resources/img_RFC12.jpg", sensor_name=cam_sensor2),
+                    Image(filename="./examples/resources/img_RFC11.jpg", sensor_name=cam_sensor1),
+                    Image(filename="./examples/resources/img_RFC12.jpg", sensor_name=cam_sensor2),
                 ],
                 ego_vehicle_pose=EgoVehiclePose(
                     position=Position(x=2.0, y=2.0, z=2.0), rotation=RotationQuaternion(w=0.01, x=2.01, y=2.01, z=2.01)
@@ -69,14 +64,11 @@ def run(
     )
     # If neither project or batch is provided, the scene will be created without creating an input.
     # The data will be uploaded to the Kognic platform, which at a later stage can be toggled to be annotated (creating an input)
-    return client.lidars_and_cameras_sequence.create(lidars_and_cameras_seq, annotation_types=annotation_types, dryrun=dryrun)
+    return client.lidars_and_cameras_sequence.create(lidars_and_cameras_seq, dryrun=dryrun)
 
 
 if __name__ == "__main__":
     setup_logging(level="INFO")
-    client = IOC.KognicIOClient()
+    client = KognicIOClient()
 
-    # Annotation Types - Available via `client.project.get_annotation_types(project)`
-    annotation_types = ["annotation-type"]
-
-    run(client, annotation_types, dryrun=True)
+    run(client, dryrun=True)

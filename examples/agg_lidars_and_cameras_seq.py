@@ -4,14 +4,11 @@ from datetime import datetime
 from typing import List, Optional
 from uuid import uuid4
 
-import kognic.io.model.scene as SceneModel
-import kognic.io.model.scene.aggregated_lidars_and_cameras_seq as ALCSModel
+import kognic.io.model.scene.aggregated_lidars_and_cameras_seq as ALCSM
 from kognic.io.client import KognicIOClient
 from kognic.io.logger import setup_logging
-from kognic.io.model.calibration import Position, RotationQuaternion
-from kognic.io.model.ego import EgoVehiclePose
+from kognic.io.model import CreateSceneResponse, EgoVehiclePose, Image, PointCloud, Position, RotationQuaternion
 from kognic.io.model.scene.metadata.metadata import MetaData
-from kognic.io.model.scene.resources import Image, PointCloud
 
 from examples.calibration.calibration import create_sensor_calibration
 
@@ -21,7 +18,7 @@ def run(
     project: str,
     annotation_types: Optional[List[str]] = None,
     dryrun: bool = True,
-) -> SceneModel.CreateSceneResponse:
+) -> CreateSceneResponse:
     print("Creating Lidar and Camera Sequence Scene...")
 
     lidar_sensor1 = "lidar"
@@ -44,10 +41,10 @@ def run(
     )
     created_calibration = client.calibration.create_calibration(calibration_spec)
 
-    aggregated_lidars_and_cameras_seq = ALCSModel.AggregatedLidarsAndCamerasSequence(
+    aggregated_lidars_and_cameras_seq = ALCSM.AggregatedLidarsAndCamerasSequence(
         external_id=f"Aggregated-LCS-full-example-{uuid4()}",
         frames=[
-            ALCSModel.Frame(
+            ALCSM.Frame(
                 frame_id="1",
                 relative_timestamp=0,
                 point_clouds=[
@@ -72,7 +69,7 @@ def run(
                     rotation=RotationQuaternion(w=0.01, x=1.01, y=1.01, z=1.01),
                 ),
             ),
-            ALCSModel.Frame(
+            ALCSM.Frame(
                 frame_id="2",
                 relative_timestamp=500,
                 point_clouds=[
@@ -96,7 +93,7 @@ def run(
                     rotation=RotationQuaternion(w=0.01, x=2.01, y=2.01, z=2.01),
                 ),
             ),
-            ALCSModel.Frame(
+            ALCSM.Frame(
                 frame_id="3",
                 relative_timestamp=1000,
                 point_clouds=[
@@ -124,14 +121,13 @@ def run(
         calibration_id=created_calibration.id,
         metadata=metadata,
     )
-    # Create input
-    input = client.aggregated_lidars_and_cameras_seq.create(
+    # Create scene
+    return client.aggregated_lidars_and_cameras_seq.create(
         aggregated_lidars_and_cameras_seq,
         project=project,
         annotation_types=annotation_types,
         dryrun=dryrun,
     )
-    return input
 
 
 if __name__ == "__main__":

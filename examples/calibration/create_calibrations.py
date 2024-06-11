@@ -1,10 +1,10 @@
-import kognic.io.model as IAM
 from kognic.io.client import KognicIOClient
+from kognic.io.model import SensorCalibrationEntry
 
 from examples.calibration.calibration import create_sensor_calibration
 
 
-def run(client: KognicIOClient, calibration_identifier: str) -> IAM.SensorCalibrationEntry:
+def run(client: KognicIOClient, calibration_identifier: str) -> SensorCalibrationEntry:
     print("Listing Calibration...")
 
     lidar_sensor1 = "lidar"
@@ -12,9 +12,7 @@ def run(client: KognicIOClient, calibration_identifier: str) -> IAM.SensorCalibr
 
     # Create calibration
     calibration_spec = create_sensor_calibration(calibration_identifier, [lidar_sensor1], cam_sensors)
-    created_calibration = client.calibration.create_calibration(calibration_spec)
-
-    return created_calibration
+    return client.calibration.create_calibration(calibration_spec)
 
 
 if __name__ == "__main__":

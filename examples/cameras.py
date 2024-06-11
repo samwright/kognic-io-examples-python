@@ -4,22 +4,21 @@ from pathlib import Path
 from typing import List, Optional
 from uuid import uuid4
 
-import kognic.io.model.scene as SceneModel
-import kognic.io.model.scene.cameras as CamerasModel
+import kognic.io.model.scene.cameras as CM
 from kognic.io.client import KognicIOClient
 from kognic.io.logger import setup_logging
+from kognic.io.model import CreateSceneResponse, Image
 from kognic.io.model.scene.metadata.metadata import MetaData
-from kognic.io.model.scene.resources import Image
 
 base_dir = Path(__file__).parent.absolute()
 
 
 def run(
     client: KognicIOClient,
-    project: str,
+    project: Optional[str],
     annotation_types: Optional[List[str]] = None,
     dryrun: bool = True,
-) -> Optional[SceneModel.CreateSceneResponse]:
+) -> Optional[CreateSceneResponse]:
     print("Creating Cameras Scene...")
 
     metadata = MetaData(
@@ -30,9 +29,9 @@ def run(
         }
     )
 
-    cameras = CamerasModel.Cameras(
+    cameras = CM.Cameras(
         external_id=f"cameras-example-{uuid4()}",
-        frame=CamerasModel.Frame(
+        frame=CM.Frame(
             images=[
                 Image(
                     filename=str(base_dir) + "/resources/img_RFC01.jpg",
@@ -47,15 +46,8 @@ def run(
         metadata=metadata,
     )
 
-    # Create input
-    input = client.cameras.create(
-        cameras,
-        project=project,
-        annotation_types=annotation_types,
-        dryrun=dryrun,
-    )
-
-    return input
+    # Create scene
+    return client.cameras.create(cameras, project=project, annotation_types=annotation_types, dryrun=dryrun)
 
 
 if __name__ == "__main__":

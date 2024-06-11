@@ -2,35 +2,32 @@ from __future__ import absolute_import
 
 from uuid import uuid4
 
-import kognic.io.client as IOC
-import kognic.io.model.scene as SceneModel
-import kognic.io.model.scene.lidars as lidar_model
-import kognic.io.model.scene.resources as ResourceModel
+import kognic.io.model.scene.lidars as LM
+from kognic.io.client import KognicIOClient
 from kognic.io.logger import setup_logging
+from kognic.io.model import CreateSceneResponse, PointCloud
 from kognic.io.model.scene.metadata.metadata import MetaData
 
 
-def run(client: IOC.KognicIOClient, project: str, dryrun: bool = True) -> SceneModel.CreateSceneResponse:
+def run(client: KognicIOClient, project: str, dryrun: bool = True) -> CreateSceneResponse:
     print("Creating Lidars Scene...")
 
     lidar_sensor1 = "lidar"
     metadata = MetaData.model_validate({"location-lat": 27.986065, "location-long": 86.922623, "vehicle_id": "abg"})
 
-    lidars = lidar_model.Lidars(
+    lidars = LM.Lidars(
         external_id=f"lidars-example-{uuid4()}",
-        frame=lidar_model.Frame(
-            point_clouds=[ResourceModel.PointCloud(filename="./examples/resources/point_cloud_RFL01.las", sensor_name=lidar_sensor1)]
-        ),
+        frame=LM.Frame(point_clouds=[PointCloud(filename="./examples/resources/point_cloud_RFL01.las", sensor_name=lidar_sensor1)]),
         metadata=metadata,
     )
 
-    # Add input
+    # Create scene
     return client.lidars.create(lidars, project=project, dryrun=dryrun)
 
 
 if __name__ == "__main__":
     setup_logging(level="INFO")
-    client = IOC.KognicIOClient()
+    client = KognicIOClient()
 
     # Project - Available via `client.project.get_projects()`
     project = "<project-identifier>"

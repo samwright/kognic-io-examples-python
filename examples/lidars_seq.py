@@ -1,16 +1,16 @@
 from __future__ import absolute_import
 
+from typing import Optional
 from uuid import uuid4
 
-import kognic.io.client as IOC
-import kognic.io.model.scene as SceneModel
 import kognic.io.model.scene.lidars_sequence as LSM
-import kognic.io.model.scene.resources as ResourceModel
+from kognic.io.client import KognicIOClient
 from kognic.io.logger import setup_logging
+from kognic.io.model import CreateSceneResponse, PointCloud
 from kognic.io.model.scene.metadata.metadata import MetaData
 
 
-def run(client: IOC.KognicIOClient, project: str, dryrun: bool = True) -> SceneModel.CreateSceneResponse:
+def run(client: KognicIOClient, project: str, dryrun: bool = True) -> Optional[CreateSceneResponse]:
     print("Creating Lidar Sequence Scene...")
 
     lidar_sensor1 = "lidar"
@@ -23,7 +23,7 @@ def run(client: IOC.KognicIOClient, project: str, dryrun: bool = True) -> SceneM
                 frame_id="1",
                 relative_timestamp=0,
                 point_clouds=[
-                    ResourceModel.PointCloud(filename="./examples/resources/point_cloud_RFL01.las", sensor_name=lidar_sensor1),
+                    PointCloud(filename="./examples/resources/point_cloud_RFL01.las", sensor_name=lidar_sensor1),
                 ],
                 metadata={"dut_status": "active"},
             ),
@@ -31,7 +31,7 @@ def run(client: IOC.KognicIOClient, project: str, dryrun: bool = True) -> SceneM
                 frame_id="2",
                 relative_timestamp=100,
                 point_clouds=[
-                    ResourceModel.PointCloud(filename="./examples/resources/point_cloud_RFL02.las", sensor_name=lidar_sensor1),
+                    PointCloud(filename="./examples/resources/point_cloud_RFL02.las", sensor_name=lidar_sensor1),
                 ],
                 metadata={"dut_status": "active"},
             ),
@@ -44,7 +44,7 @@ def run(client: IOC.KognicIOClient, project: str, dryrun: bool = True) -> SceneM
 
 if __name__ == "__main__":
     setup_logging(level="INFO")
-    client = IOC.KognicIOClient()
+    client = KognicIOClient()
 
     # Project - Available via `client.project.get_projects()`
     project = "<project-identifier>"

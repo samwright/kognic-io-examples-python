@@ -5,19 +5,18 @@ from datetime import datetime
 from typing import List, Optional
 from uuid import uuid4
 
-import kognic.io.client as IOC
-import kognic.io.model.scene as SceneModel
 import kognic.io.model.scene.lidars_and_cameras_sequence as LCSM
-import kognic.io.model.scene.resources as ResourceModel
+from kognic.io.client import KognicIOClient
 from kognic.io.logger import setup_logging
+from kognic.io.model import CreateSceneResponse, Image, ImageMetadata, PointCloud
 
 from examples.calibration.calibration import create_sensor_calibration
 from examples.imu_data.create_imu_data import create_dummy_imu_data
 
 
 def run(
-    client: IOC.KognicIOClient, project: str, annotation_types: Optional[List[str]] = None, dryrun: bool = True
-) -> SceneModel.CreateSceneResponse:
+    client: KognicIOClient, project: Optional[str], annotation_types: Optional[List[str]] = None, dryrun: bool = True
+) -> Optional[CreateSceneResponse]:
     print("Creating Lidar and Camera Sequence Scene...")
 
     lidar_sensor1 = "RFL01"
@@ -45,21 +44,21 @@ def run(
                 unix_timestamp=start_ts + ONE_MILLISECOND,
                 relative_timestamp=0,
                 point_clouds=[
-                    ResourceModel.PointCloud(filename=examples_path + "/resources/point_cloud_RFL01.csv", sensor_name=lidar_sensor1),
-                    ResourceModel.PointCloud(filename=examples_path + "/resources/point_cloud_RFL02.csv", sensor_name=lidar_sensor2),
+                    PointCloud(filename=examples_path + "/resources/point_cloud_RFL01.csv", sensor_name=lidar_sensor1),
+                    PointCloud(filename=examples_path + "/resources/point_cloud_RFL02.csv", sensor_name=lidar_sensor2),
                 ],
                 images=[
-                    ResourceModel.Image(
+                    Image(
                         filename=examples_path + "/resources/img_RFC01.jpg",
                         sensor_name=cam_sensor1,
-                        metadata=ResourceModel.ImageMetadata(
+                        metadata=ImageMetadata(
                             shutter_time_start_ns=start_ts + 0.5 * ONE_MILLISECOND, shutter_time_end_ns=start_ts + 1.5 * ONE_MILLISECOND
                         ),
                     ),
-                    ResourceModel.Image(
+                    Image(
                         filename=examples_path + "/resources/img_RFC02.jpg",
                         sensor_name=cam_sensor2,
-                        metadata=ResourceModel.ImageMetadata(
+                        metadata=ImageMetadata(
                             shutter_time_start_ns=start_ts + 0.5 * ONE_MILLISECOND, shutter_time_end_ns=start_ts + 1.5 * ONE_MILLISECOND
                         ),
                     ),
@@ -70,21 +69,21 @@ def run(
                 unix_timestamp=start_ts + 5 * ONE_MILLISECOND,
                 relative_timestamp=4,
                 point_clouds=[
-                    ResourceModel.PointCloud(filename=examples_path + "/resources/point_cloud_RFL11.csv", sensor_name=lidar_sensor1),
-                    ResourceModel.PointCloud(filename=examples_path + "/resources/point_cloud_RFL12.csv", sensor_name=lidar_sensor2),
+                    PointCloud(filename=examples_path + "/resources/point_cloud_RFL11.csv", sensor_name=lidar_sensor1),
+                    PointCloud(filename=examples_path + "/resources/point_cloud_RFL12.csv", sensor_name=lidar_sensor2),
                 ],
                 images=[
-                    ResourceModel.Image(
+                    Image(
                         filename=examples_path + "/resources/img_RFC11.jpg",
                         sensor_name=cam_sensor1,
-                        metadata=ResourceModel.ImageMetadata(
+                        metadata=ImageMetadata(
                             shutter_time_start_ns=start_ts + 4.5 * ONE_MILLISECOND, shutter_time_end_ns=start_ts + 5.5 * ONE_MILLISECOND
                         ),
                     ),
-                    ResourceModel.Image(
+                    Image(
                         filename=examples_path + "/resources/img_RFC12.jpg",
                         sensor_name=cam_sensor2,
-                        metadata=ResourceModel.ImageMetadata(
+                        metadata=ImageMetadata(
                             shutter_time_start_ns=start_ts + 4.5 * ONE_MILLISECOND, shutter_time_end_ns=start_ts + 5.5 * ONE_MILLISECOND
                         ),
                     ),
@@ -103,7 +102,7 @@ def run(
 
 if __name__ == "__main__":
     setup_logging(level="INFO")
-    client = IOC.KognicIOClient()
+    client = KognicIOClient()
 
     # Project - Available via `client.project.get_projects()`
     project = "<project-id>"

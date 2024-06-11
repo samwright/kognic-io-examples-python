@@ -4,12 +4,11 @@ from datetime import datetime
 from typing import List, Optional
 from uuid import uuid4
 
-import kognic.io.model.scene as SceneModel
-import kognic.io.model.scene.lidars_and_cameras as LidarsCamerasModel
+import kognic.io.model.scene.lidars_and_cameras as LCM
 from kognic.io.client import KognicIOClient
 from kognic.io.logger import setup_logging
+from kognic.io.model import CreateSceneResponse, Image, PointCloud
 from kognic.io.model.scene.metadata.metadata import MetaData
-from kognic.io.model.scene.resources import Image, PointCloud
 
 from examples.calibration.calibration import create_sensor_calibration
 
@@ -19,7 +18,7 @@ def run(
     project: Optional[str],
     annotation_types: Optional[List[str]] = None,
     dryrun: bool = True,
-) -> SceneModel.CreateSceneResponse:
+) -> CreateSceneResponse:
     annotation_types = annotation_types or []
     print("Creating Lidars And Cameras Scene...")
 
@@ -43,9 +42,9 @@ def run(
     )
     created_calibration = client.calibration.create_calibration(calibration_spec)
 
-    lidars_and_cameras = LidarsCamerasModel.LidarsAndCameras(
+    lidars_and_cameras = LCM.LidarsAndCameras(
         external_id=f"lidars-and-cameras-example-{uuid4()}",
-        frame=LidarsCamerasModel.Frame(
+        frame=LCM.Frame(
             point_clouds=[
                 PointCloud(
                     filename="./examples/resources/point_cloud_RFL01.las",
@@ -67,14 +66,8 @@ def run(
         metadata=metadata,
     )
 
-    # Create input
-    input = client.lidars_and_cameras.create(
-        lidars_and_cameras,
-        project=project,
-        annotation_types=annotation_types,
-        dryrun=dryrun,
-    )
-    return input
+    # Create scene
+    return client.lidars_and_cameras.create(lidars_and_cameras, project=project, annotation_types=annotation_types, dryrun=dryrun)
 
 
 if __name__ == "__main__":

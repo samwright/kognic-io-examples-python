@@ -5,10 +5,10 @@ from datetime import datetime
 from typing import List, Optional
 from uuid import uuid4
 
-import kognic.io.client as IOC
 import kognic.io.model.scene.lidars_and_cameras as LC
-import kognic.io.model.scene.resources as ResourceModel
+from kognic.io.client import KognicIOClient
 from kognic.io.logger import setup_logging
+from kognic.io.model import Image, PointCloud
 from kognic.io.model.input.input import Input
 from kognic.openlabel.models import OpenLabelAnnotation
 
@@ -17,7 +17,7 @@ from examples.utils import wait_for_scene_job
 
 
 def run(
-    client: IOC.KognicIOClient,
+    client: KognicIOClient,
     project: str,
     annotation_types: Optional[List[str]] = None,
     dryrun: bool = True,
@@ -40,15 +40,15 @@ def run(
         external_id=f"LC-with-pre-annotation-example-{uuid4()}",
         frame=LC.Frame(
             point_clouds=[
-                ResourceModel.PointCloud(filename=examples_path + "/resources/point_cloud_RFL01.csv", sensor_name=lidar_sensor1),
-                ResourceModel.PointCloud(filename=examples_path + "/resources/point_cloud_RFL02.csv", sensor_name=lidar_sensor2),
+                PointCloud(filename=examples_path + "/resources/point_cloud_RFL01.csv", sensor_name=lidar_sensor1),
+                PointCloud(filename=examples_path + "/resources/point_cloud_RFL02.csv", sensor_name=lidar_sensor2),
             ],
             images=[
-                ResourceModel.Image(
+                Image(
                     filename=examples_path + "/resources/img_RFC01.jpg",
                     sensor_name=cam_sensor1,
                 ),
-                ResourceModel.Image(
+                Image(
                     filename=examples_path + "/resources/img_RFC02.jpg",
                     sensor_name=cam_sensor2,
                 ),
@@ -76,7 +76,7 @@ def run(
 
 if __name__ == "__main__":
     setup_logging(level="INFO")
-    client = IOC.KognicIOClient()
+    client = KognicIOClient()
 
     # Project - Available via `client.project.get_projects()`
     project = "<project-id>"

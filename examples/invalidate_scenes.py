@@ -1,15 +1,15 @@
-import kognic.io.client as IOC
-import kognic.io.model as IAM
+from kognic.io.client import KognicIOClient
+from kognic.io.model import SceneInvalidatedReason
 
 
-def run(client: IOC.KognicIOClient, scene_uuid: str, reason: IAM.SceneInvalidatedReason) -> None:
+def run(client: KognicIOClient, scene_uuid: str, reason: SceneInvalidatedReason) -> None:
     print("Invalidating scenes...")
-    return client.scene.invalidate_scenes(scene_uuids=[scene_uuid], reason=reason)
+    client.scene.invalidate_scenes(scene_uuids=[scene_uuid], reason=reason)
 
 
 if __name__ == "__main__":
-    client = IOC.KognicIOClient()
+    client = KognicIOClient()
 
     scene_uuid = "Scene-identifier"
-    invalidated_reason = IAM.SceneInvalidatedReason.INCORRECTLY_CREATED
+    invalidated_reason = SceneInvalidatedReason.INCORRECTLY_CREATED
     run(client, scene_uuid, invalidated_reason)
