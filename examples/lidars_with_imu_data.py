@@ -30,7 +30,7 @@ def run(client: KognicIOClient, project: str, dryrun: bool = True) -> CreateScen
         imu_data=imu_data,
     )
 
-    # Add input
+    # Create scene
     return client.lidars.create(lidars, project=project, dryrun=dryrun)
 
 

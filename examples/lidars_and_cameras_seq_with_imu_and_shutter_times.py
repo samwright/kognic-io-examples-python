@@ -94,7 +94,7 @@ def run(
         metadata=metadata,
         imu_data=imu_data,
     )
-    # Add input
+    # Create scene
     return client.lidars_and_cameras_sequence.create(
         lidars_and_cameras_seq, project=project, annotation_types=annotation_types, dryrun=dryrun
     )

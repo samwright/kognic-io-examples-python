@@ -41,7 +41,7 @@ def run(client: KognicIOClient, project: Optional[str], dryrun: bool = True):
         metadata=metadata,
     )
 
-    # Add input
+    # Create scene
     return client.cameras_sequence.create(cameras_sequence, project=project, dryrun=dryrun)
 
 

@@ -38,7 +38,7 @@ def run(client: KognicIOClient, project: str, dryrun: bool = True) -> Optional[C
         ],
         metadata=metadata,
     )
-    # Add input
+    # Create scene
     return client.lidars_sequence.create(lidars_seq, project=project, dryrun=dryrun)
 
 
