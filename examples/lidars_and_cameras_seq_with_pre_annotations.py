@@ -81,7 +81,7 @@ def run(
     )
 
     # Create Scene but not input since we don't provide project or batch
-    scene_response = client.lidars_and_cameras_sequence.create(lidars_and_cameras_seq, annotation_types=annotation_types, dryrun=dryrun)
+    scene_response = client.lidars_and_cameras_sequence.create(lidars_and_cameras_seq, dryrun=dryrun)
     if dryrun:
         return scene_response
     wait_for_scene_job(client=client, scene_uuid=scene_response.scene_uuid)
@@ -91,7 +91,7 @@ def run(
         client.pre_annotation.create(scene_uuid=scene_response.scene_uuid, pre_annotation=pre_annotation, dryrun=dryrun)
 
     return client.lidars_and_cameras_sequence.create_from_scene(
-        scene_uuid=scene_response.scene_uuid, annotation_types=annotation_types, project=project, dryrun=dryrun
+        scene_uuid=scene_response.scene_uuid, project=project, annotation_types=annotation_types, dryrun=dryrun
     )
 
 
@@ -102,7 +102,4 @@ if __name__ == "__main__":
     # Project - Available via `client.project.get_projects()`
     project = "<project-id>"
 
-    # Annotation Types - Available via `client.project.get_annotation_types(project)`
-    annotation_types = ["<annotation-type>"]
-
-    run(client, project, annotation_types, dryrun=True)
+    run(client, project, dryrun=True)

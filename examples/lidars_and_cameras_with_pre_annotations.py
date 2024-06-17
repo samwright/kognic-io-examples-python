@@ -68,10 +68,9 @@ def run(
     if pre_annotation is not None:
         client.pre_annotation.create(scene_uuid=scene_response.scene_uuid, pre_annotation=pre_annotation, dryrun=dryrun)
 
-    created_inputs = client.lidars_and_cameras.create_from_scene(
+    return client.lidars_and_cameras.create_from_scene(
         scene_uuid=scene_response.scene_uuid, annotation_types=annotation_types, project=project, dryrun=dryrun
     )
-    return created_inputs
 
 
 if __name__ == "__main__":
@@ -81,7 +80,4 @@ if __name__ == "__main__":
     # Project - Available via `client.project.get_projects()`
     project = "<project-id>"
 
-    # Annotation Types - Available via `client.project.get_annotation_types(project)`
-    annotation_types = ["<annotation-type>"]
-
-    run(client, project, annotation_types, dryrun=True)
+    run(client, project, dryrun=True)

@@ -106,7 +106,5 @@ if __name__ == "__main__":
 
     # Project - Available via `client.project.get_projects()`
     project = "<project-id>"
-    # Annotation Types - Available via `client.project.get_annotation_types(project)`
-    annotation_types = ["<annotation-type>"]
 
-    run(client, project, annotation_types, dryrun=True)
+    run(client, project, dryrun=True)

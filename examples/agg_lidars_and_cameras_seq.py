@@ -15,10 +15,10 @@ from examples.calibration.calibration import create_sensor_calibration
 
 def run(
     client: KognicIOClient,
-    project: str,
+    project: Optional[str],
     annotation_types: Optional[List[str]] = None,
     dryrun: bool = True,
-) -> CreateSceneResponse:
+) -> Optional[CreateSceneResponse]:
     print("Creating Lidar and Camera Sequence Scene...")
 
     lidar_sensor1 = "lidar"
@@ -136,7 +136,5 @@ if __name__ == "__main__":
 
     # Project - Available via `client.project.get_projects()`
     project = "<project-identifier>"
-    # Annotation Types - Available via `client.project.get_annotation_types(project)`
-    annotation_types = ["annotation-type"]
 
-    run(client, project, annotation_types, dryrun=True)
+    run(client, project, dryrun=True)
