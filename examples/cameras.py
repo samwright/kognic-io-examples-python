@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 
 from pathlib import Path
-from typing import List, Optional
+from typing import Optional
 from uuid import uuid4
 
 import kognic.io.model.scene.cameras as CM
@@ -13,12 +13,7 @@ from kognic.io.model.scene.metadata.metadata import MetaData
 base_dir = Path(__file__).parent.absolute()
 
 
-def run(
-    client: KognicIOClient,
-    project: Optional[str],
-    annotation_types: Optional[List[str]] = None,
-    dryrun: bool = True,
-) -> Optional[CreateSceneResponse]:
+def run(client: KognicIOClient, dryrun: bool = True, **kwargs) -> Optional[CreateSceneResponse]:
     print("Creating Cameras Scene...")
 
     metadata = MetaData(
@@ -29,7 +24,7 @@ def run(
         }
     )
 
-    cameras = CM.Cameras(
+    scene = CM.Cameras(
         external_id=f"cameras-example-{uuid4()}",
         frame=CM.Frame(
             images=[
@@ -47,7 +42,7 @@ def run(
     )
 
     # Create scene
-    return client.cameras.create(cameras, project=project, annotation_types=annotation_types, dryrun=dryrun)
+    return client.cameras.create(scene, dryrun=dryrun, **kwargs)
 
 
 if __name__ == "__main__":
@@ -57,4 +52,4 @@ if __name__ == "__main__":
     # Project - Available via `client.project.get_projects()`
     project = "Project-identifier"
 
-    run(client, project)
+    run(client, project=project)

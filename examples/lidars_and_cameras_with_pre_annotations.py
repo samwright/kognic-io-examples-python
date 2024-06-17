@@ -17,11 +17,7 @@ from examples.utils import wait_for_scene_job
 
 
 def run(
-    client: KognicIOClient,
-    project: str,
-    annotation_types: Optional[List[str]] = None,
-    dryrun: bool = True,
-    pre_annotation: Optional[OpenLabelAnnotation] = None,
+    client: KognicIOClient, dryrun: bool = True, pre_annotation: Optional[OpenLabelAnnotation] = None, **kwargs
 ) -> Optional[List[Input]]:
     print("Creating Lidar and Camera Sequence Scene with OpenLabel pre-annotations...")
 
@@ -36,7 +32,7 @@ def run(
     calibration_spec = create_sensor_calibration(f"Collection {datetime.now()}", [lidar_sensor1, lidar_sensor2], [cam_sensor1, cam_sensor2])
     created_calibration = client.calibration.create_calibration(calibration_spec)
 
-    lidars_and_cameras = LC.LidarsAndCameras(
+    scene = LC.LidarsAndCameras(
         external_id=f"LC-with-pre-annotation-example-{uuid4()}",
         frame=LC.Frame(
             point_clouds=[
@@ -59,7 +55,7 @@ def run(
     )
 
     # Create Scene but not input since we don't provide project or batch
-    scene_response = client.lidars_and_cameras.create(lidars_and_cameras, annotation_types=annotation_types, dryrun=dryrun)
+    scene_response = client.lidars_and_cameras.create(scene, dryrun=dryrun)
     if dryrun:
         return scene_response
     wait_for_scene_job(client=client, scene_uuid=scene_response.scene_uuid)
@@ -68,9 +64,7 @@ def run(
     if pre_annotation is not None:
         client.pre_annotation.create(scene_uuid=scene_response.scene_uuid, pre_annotation=pre_annotation, dryrun=dryrun)
 
-    return client.lidars_and_cameras.create_from_scene(
-        scene_uuid=scene_response.scene_uuid, annotation_types=annotation_types, project=project, dryrun=dryrun
-    )
+    return client.lidars_and_cameras.create_from_scene(scene_uuid=scene_response.scene_uuid, dryrun=dryrun, **kwargs)
 
 
 if __name__ == "__main__":
@@ -80,4 +74,4 @@ if __name__ == "__main__":
     # Project - Available via `client.project.get_projects()`
     project = "<project-id>"
 
-    run(client, project, dryrun=True)
+    run(client, project=project)

@@ -2,7 +2,7 @@ from __future__ import absolute_import
 
 import os.path
 from datetime import datetime
-from typing import List, Optional
+from typing import Optional
 from uuid import uuid4
 
 import kognic.io.model.scene.lidars_and_cameras_sequence as LCSM
@@ -13,9 +13,7 @@ from kognic.io.model import CreateSceneResponse, Image, PointCloud
 from examples.calibration.calibration import create_sensor_calibration
 
 
-def run(
-    client: KognicIOClient, project: Optional[str], annotation_types: Optional[List[str]] = None, dryrun: bool = True
-) -> Optional[CreateSceneResponse]:
+def run(client: KognicIOClient, dryrun: bool = True, **kwargs) -> Optional[CreateSceneResponse]:
     print("Creating Lidar and Camera Sequence Scene...")
 
     lidar_sensor1 = "RFL01"
@@ -28,7 +26,7 @@ def run(
     calibration_spec = create_sensor_calibration(f"Collection {datetime.now()}", [lidar_sensor1, lidar_sensor2], [cam_sensor1])
     created_calibration = client.calibration.create_calibration(calibration_spec)
 
-    lidars_and_cameras_seq = LCSM.LidarsAndCamerasSequence(
+    scene = LCSM.LidarsAndCamerasSequence(
         external_id=f"LCS-with-dropouts-example-{uuid4()}",
         frames=[
             LCSM.Frame(
@@ -62,9 +60,7 @@ def run(
         metadata=metadata,
     )
     # Create scene
-    return client.lidars_and_cameras_sequence.create(
-        lidars_and_cameras_seq, project=project, annotation_types=annotation_types, dryrun=dryrun
-    )
+    return client.lidars_and_cameras_sequence.create(scene, dryrun=dryrun, **kwargs)
 
 
 if __name__ == "__main__":
@@ -74,4 +70,4 @@ if __name__ == "__main__":
     # Project - Available via `client.project.get_projects()`
     project = "<project-identifier>"
 
-    run(client, project, dryrun=True)
+    run(client, project=project)

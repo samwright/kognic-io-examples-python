@@ -1,7 +1,6 @@
 from __future__ import absolute_import
 
 from datetime import datetime
-from typing import List, Optional
 from uuid import uuid4
 
 import kognic.io.model.scene.lidars_and_cameras as LCM
@@ -13,13 +12,7 @@ from kognic.io.model.scene.metadata.metadata import MetaData
 from examples.calibration.calibration import create_sensor_calibration
 
 
-def run(
-    client: KognicIOClient,
-    project: Optional[str],
-    annotation_types: Optional[List[str]] = None,
-    dryrun: bool = True,
-) -> CreateSceneResponse:
-    annotation_types = annotation_types or []
+def run(client: KognicIOClient, dryrun: bool = True, **kwargs) -> CreateSceneResponse:
     print("Creating Lidars And Cameras Scene...")
 
     lidar_sensor1 = "lidar"
@@ -42,7 +35,7 @@ def run(
     )
     created_calibration = client.calibration.create_calibration(calibration_spec)
 
-    lidars_and_cameras = LCM.LidarsAndCameras(
+    scene = LCM.LidarsAndCameras(
         external_id=f"lidars-and-cameras-example-{uuid4()}",
         frame=LCM.Frame(
             point_clouds=[
@@ -67,7 +60,7 @@ def run(
     )
 
     # Create scene
-    return client.lidars_and_cameras.create(lidars_and_cameras, project=project, annotation_types=annotation_types, dryrun=dryrun)
+    return client.lidars_and_cameras.create(scene, dryrun=dryrun, **kwargs)
 
 
 if __name__ == "__main__":
@@ -77,4 +70,4 @@ if __name__ == "__main__":
     # Project - Available via `client.project.get_projects()`
     project = "<project-identifier>"
 
-    run(client, project)
+    run(client, project=project)

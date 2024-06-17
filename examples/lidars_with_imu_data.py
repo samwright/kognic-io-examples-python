@@ -12,7 +12,7 @@ from kognic.io.model.scene.metadata.metadata import MetaData
 from examples.imu_data.create_imu_data import create_dummy_imu_data
 
 
-def run(client: KognicIOClient, project: str, dryrun: bool = True) -> CreateSceneResponse:
+def run(client: KognicIOClient, dryrun: bool = True, **kwargs) -> CreateSceneResponse:
     print("Creating Lidars Scene...")
 
     lidar_sensor1 = "lidar"
@@ -20,7 +20,7 @@ def run(client: KognicIOClient, project: str, dryrun: bool = True) -> CreateScen
 
     imu_data = create_dummy_imu_data(1557539923, 1557539925, int(1e9))
     examples_path = os.path.dirname(__file__)
-    lidars = LM.Lidars(
+    scene = LM.Lidars(
         external_id=f"lidars-with-imu-data-example-{uuid4()}",
         frame=LM.Frame(
             point_clouds=[PointCloud(filename=examples_path + "/resources/point_cloud_RFL01.las", sensor_name=lidar_sensor1)],
@@ -31,7 +31,7 @@ def run(client: KognicIOClient, project: str, dryrun: bool = True) -> CreateScen
     )
 
     # Create scene
-    return client.lidars.create(lidars, project=project, dryrun=dryrun)
+    return client.lidars.create(scene, dryrun=dryrun, **kwargs)
 
 
 if __name__ == "__main__":
@@ -40,4 +40,4 @@ if __name__ == "__main__":
 
     # Project - Available via `client.project.get_projects()`
     project = "<project-identifier>"
-    run(client, project)
+    run(client, project=project)

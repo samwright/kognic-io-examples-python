@@ -2,7 +2,6 @@ from __future__ import absolute_import
 
 from datetime import datetime
 from pathlib import Path
-from typing import List, Optional
 from uuid import uuid4
 
 import kognic.io.model.scene.lidars_and_cameras as LC
@@ -15,10 +14,7 @@ from kognic.io.resources.scene.file_data import FileData
 from examples.calibration.calibration import create_sensor_calibration
 
 
-def run(
-    client: KognicIOClient, project: Optional[str], annotation_types: Optional[List[str]] = None, dryrun: bool = True
-) -> CreateSceneResponse:
-    annotation_types = annotation_types or []
+def run(client: KognicIOClient, dryrun: bool = True, **kwargs) -> CreateSceneResponse:
     print("Creating Lidars And Cameras Scene with data from alternative sources...")
 
     lidar_sensor1 = "lidar"
@@ -47,7 +43,7 @@ def run(
     img2_name = "./examples/resources/img_RFC02.jpg"
     img2_data = FileData(callback=get_bytes, format=FileData.Format.JPG)
 
-    lidars_and_cameras = LC.LidarsAndCameras(
+    scene = LC.LidarsAndCameras(
         external_id=f"alternative-source-{uuid4()}",
         frame=LC.Frame(
             point_clouds=[PointCloud(filename=pc_name, sensor_name=lidar_sensor1)],
@@ -61,7 +57,7 @@ def run(
     )
 
     # Create scene
-    return client.lidars_and_cameras.create(lidars_and_cameras, project=project, annotation_types=annotation_types, dryrun=dryrun)
+    return client.lidars_and_cameras.create(scene, dryrun=dryrun, **kwargs)
 
 
 if __name__ == "__main__":
@@ -71,4 +67,4 @@ if __name__ == "__main__":
     # Project - Available via `client.project.get_projects()`
     project = "<project-id>"
 
-    run(client, project, dryrun=True)
+    run(client, project=project)

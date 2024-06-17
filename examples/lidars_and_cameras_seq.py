@@ -13,11 +13,7 @@ from kognic.io.model.scene.metadata.metadata import MetaData
 from examples.calibration.calibration import create_sensor_calibration
 
 
-def run(
-    client: KognicIOClient,
-    project: Optional[str],
-    dryrun: bool = True,
-) -> Optional[CreateSceneResponse]:
+def run(client: KognicIOClient, dryrun: bool = True, **kwargs) -> Optional[CreateSceneResponse]:
     print("Creating Lidar and Camera Sequence Scene...")
 
     lidar_sensor1 = "lidar"
@@ -40,7 +36,7 @@ def run(
     )
     created_calibration = client.calibration.create_calibration(calibration_spec)
 
-    lidars_and_cameras_seq = LCSM.LidarsAndCamerasSequence(
+    scene = LCSM.LidarsAndCamerasSequence(
         external_id=f"LCS-example-{uuid4()}",
         frames=[
             LCSM.Frame(
@@ -90,7 +86,7 @@ def run(
         metadata=metadata,
     )
     # Create scene
-    return client.lidars_and_cameras_sequence.create(lidars_and_cameras_seq, project=project, dryrun=dryrun)
+    return client.lidars_and_cameras_sequence.create(scene, dryrun=dryrun, **kwargs)
 
 
 if __name__ == "__main__":

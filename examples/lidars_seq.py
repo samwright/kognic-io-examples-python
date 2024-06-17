@@ -10,13 +10,13 @@ from kognic.io.model import CreateSceneResponse, PointCloud
 from kognic.io.model.scene.metadata.metadata import MetaData
 
 
-def run(client: KognicIOClient, project: str, dryrun: bool = True) -> Optional[CreateSceneResponse]:
+def run(client: KognicIOClient, dryrun: bool = True, **kwargs) -> Optional[CreateSceneResponse]:
     print("Creating Lidar Sequence Scene...")
 
     lidar_sensor1 = "lidar"
     metadata = MetaData(**{"location-lat": 27.986065, "location-long": 86.922623, "vehicle_id": "abg"})
 
-    lidars_seq = LSM.LidarsSequence(
+    scene = LSM.LidarsSequence(
         external_id=f"lidars-seq-example-{uuid4()}",
         frames=[
             LSM.Frame(
@@ -39,7 +39,7 @@ def run(client: KognicIOClient, project: str, dryrun: bool = True) -> Optional[C
         metadata=metadata,
     )
     # Create scene
-    return client.lidars_sequence.create(lidars_seq, project=project, dryrun=dryrun)
+    return client.lidars_sequence.create(scene, dryrun=dryrun, **kwargs)
 
 
 if __name__ == "__main__":
@@ -48,4 +48,4 @@ if __name__ == "__main__":
 
     # Project - Available via `client.project.get_projects()`
     project = "<project-identifier>"
-    run(client, project)
+    run(client, project=project)

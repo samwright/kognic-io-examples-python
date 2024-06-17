@@ -2,7 +2,7 @@ from __future__ import absolute_import
 
 import os.path
 from datetime import datetime
-from typing import List, Optional
+from typing import Optional
 from uuid import uuid4
 
 import kognic.io.model.scene.lidars_and_cameras_sequence as LCSM
@@ -14,9 +14,7 @@ from examples.calibration.calibration import create_sensor_calibration
 from examples.imu_data.create_imu_data import create_dummy_imu_data
 
 
-def run(
-    client: KognicIOClient, project: Optional[str], annotation_types: Optional[List[str]] = None, dryrun: bool = True
-) -> Optional[CreateSceneResponse]:
+def run(client: KognicIOClient, dryrun: bool = True, **kwargs) -> Optional[CreateSceneResponse]:
     print("Creating Lidar and Camera Sequence Scene...")
 
     lidar_sensor1 = "RFL01"
@@ -36,7 +34,7 @@ def run(
     end_ts = start_ts + 10 * ONE_MILLISECOND
     imu_data = create_dummy_imu_data(start_timestamp=start_ts, end_timestamp=end_ts, samples_per_sec=1000)
 
-    lidars_and_cameras_seq = LCSM.LidarsAndCamerasSequence(
+    scene = LCSM.LidarsAndCamerasSequence(
         external_id=f"LCS-full-with-imu-and-shutter-example-{uuid4()}",
         frames=[
             LCSM.Frame(
@@ -95,9 +93,7 @@ def run(
         imu_data=imu_data,
     )
     # Create scene
-    return client.lidars_and_cameras_sequence.create(
-        lidars_and_cameras_seq, project=project, annotation_types=annotation_types, dryrun=dryrun
-    )
+    return client.lidars_and_cameras_sequence.create(scene, dryrun=dryrun, **kwargs)
 
 
 if __name__ == "__main__":
@@ -107,4 +103,4 @@ if __name__ == "__main__":
     # Project - Available via `client.project.get_projects()`
     project = "<project-id>"
 
-    run(client, project, dryrun=True)
+    run(client, project=project)

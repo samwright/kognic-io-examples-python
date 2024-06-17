@@ -1,6 +1,5 @@
 from __future__ import absolute_import
 
-from typing import Optional
 from uuid import uuid4
 
 import kognic.io.model.scene.cameras_sequence as CSM
@@ -10,14 +9,14 @@ from kognic.io.model import VideoFrame
 from kognic.io.model.scene.metadata.metadata import MetaData
 
 
-def run(client: KognicIOClient, project: Optional[str], dryrun: bool = True):
+def run(client: KognicIOClient, dryrun: bool = True, **kwargs):
     print("Creating Cameras Sequence Scene...")
 
     sensor1 = "RFC01"
     sensor2 = "RFC02"
     metadata = MetaData.model_validate({"location-lat": 27.986065, "location-long": 86.922623, "vehicle_id": "abg"})
 
-    cameras_sequence = CSM.CamerasSequence(
+    scene = CSM.CamerasSequence(
         external_id=f"camera-seq-videos-example-{uuid4()}",
         frames=[
             CSM.Frame(
@@ -42,7 +41,7 @@ def run(client: KognicIOClient, project: Optional[str], dryrun: bool = True):
     )
 
     # Create scene
-    return client.cameras_sequence.create(cameras_sequence, project=project, dryrun=dryrun)
+    return client.cameras_sequence.create(scene, dryrun=dryrun, **kwargs)
 
 
 if __name__ == "__main__":
@@ -52,4 +51,4 @@ if __name__ == "__main__":
     project = "<project-identifier>"
 
     client = KognicIOClient()
-    run(client, project)
+    run(client, project=project)

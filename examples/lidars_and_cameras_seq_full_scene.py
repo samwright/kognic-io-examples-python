@@ -26,7 +26,7 @@ def run(client: KognicIOClient, dryrun: bool = True) -> Optional[CreateSceneResp
     calibration_spec = create_sensor_calibration(f"Collection {datetime.now()}", [lidar_sensor1], [cam_sensor1, cam_sensor2, cam_sensor3])
     created_calibration = client.calibration.create_calibration(calibration_spec)
 
-    lidars_and_cameras_seq = LCSM.LidarsAndCamerasSequence(
+    scene = LCSM.LidarsAndCamerasSequence(
         external_id=f"LCS-full-scene-example-{uuid4()}",
         frames=[
             LCSM.Frame(
@@ -64,7 +64,7 @@ def run(client: KognicIOClient, dryrun: bool = True) -> Optional[CreateSceneResp
     )
     # If neither project or batch is provided, the scene will be created without creating an input.
     # The data will be uploaded to the Kognic platform, which at a later stage can be toggled to be annotated (creating an input)
-    return client.lidars_and_cameras_sequence.create(lidars_and_cameras_seq, dryrun=dryrun)
+    return client.lidars_and_cameras_sequence.create(scene, dryrun=dryrun)
 
 
 if __name__ == "__main__":

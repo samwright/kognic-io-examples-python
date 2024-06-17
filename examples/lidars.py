@@ -9,7 +9,7 @@ from kognic.io.model import CreateSceneResponse, PointCloud
 from kognic.io.model.scene.metadata.metadata import MetaData
 
 
-def run(client: KognicIOClient, project: str, dryrun: bool = True) -> CreateSceneResponse:
+def run(client: KognicIOClient, dryrun: bool = True, **kwargs) -> CreateSceneResponse:
     print("Creating Lidars Scene...")
 
     lidar_sensor1 = "lidar"
@@ -22,7 +22,7 @@ def run(client: KognicIOClient, project: str, dryrun: bool = True) -> CreateScen
     )
 
     # Create scene
-    return client.lidars.create(lidars, project=project, dryrun=dryrun)
+    return client.lidars.create(lidars, dryrun=dryrun, **kwargs)
 
 
 if __name__ == "__main__":
@@ -31,4 +31,4 @@ if __name__ == "__main__":
 
     # Project - Available via `client.project.get_projects()`
     project = "<project-identifier>"
-    run(client, project)
+    run(client, project=project)

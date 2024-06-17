@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 
 from datetime import datetime
-from typing import List, Optional
+from typing import Optional
 from uuid import uuid4
 
 import kognic.io.model.scene.aggregated_lidars_and_cameras_seq as ALCSM
@@ -13,12 +13,7 @@ from kognic.io.model.scene.metadata.metadata import MetaData
 from examples.calibration.calibration import create_sensor_calibration
 
 
-def run(
-    client: KognicIOClient,
-    project: Optional[str],
-    annotation_types: Optional[List[str]] = None,
-    dryrun: bool = True,
-) -> Optional[CreateSceneResponse]:
+def run(client: KognicIOClient, dryrun: bool = True, **kwargs) -> Optional[CreateSceneResponse]:
     print("Creating Lidar and Camera Sequence Scene...")
 
     lidar_sensor1 = "lidar"
@@ -41,7 +36,7 @@ def run(
     )
     created_calibration = client.calibration.create_calibration(calibration_spec)
 
-    aggregated_lidars_and_cameras_seq = ALCSM.AggregatedLidarsAndCamerasSequence(
+    scene = ALCSM.AggregatedLidarsAndCamerasSequence(
         external_id=f"Aggregated-LCS-full-example-{uuid4()}",
         frames=[
             ALCSM.Frame(
@@ -122,12 +117,7 @@ def run(
         metadata=metadata,
     )
     # Create scene
-    return client.aggregated_lidars_and_cameras_seq.create(
-        aggregated_lidars_and_cameras_seq,
-        project=project,
-        annotation_types=annotation_types,
-        dryrun=dryrun,
-    )
+    return client.aggregated_lidars_and_cameras_seq.create(scene, dryrun=dryrun, **kwargs)
 
 
 if __name__ == "__main__":
@@ -137,4 +127,4 @@ if __name__ == "__main__":
     # Project - Available via `client.project.get_projects()`
     project = "<project-identifier>"
 
-    run(client, project, dryrun=True)
+    run(client, project=project)
