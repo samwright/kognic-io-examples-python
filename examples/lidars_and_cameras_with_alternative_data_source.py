@@ -8,7 +8,6 @@ import kognic.io.model.scene.lidars_and_cameras as LC
 from kognic.io.client import KognicIOClient
 from kognic.io.logger import setup_logging
 from kognic.io.model import CreateSceneResponse, Image, PointCloud
-from kognic.io.model.scene.metadata.metadata import MetaData
 from kognic.io.resources.scene.file_data import FileData
 
 from examples.calibration.calibration import create_sensor_calibration
@@ -21,7 +20,7 @@ def run(client: KognicIOClient, dryrun: bool = True, **kwargs) -> CreateSceneRes
     cam_sensor1 = "RFC01"
     cam_sensor2 = "RFC02"
     cam_sensor3 = "RFC03"
-    metadata = MetaData(**{"location-lat": 27.986065, "location-long": 86.922623, "vehicle_id": "abg"})
+    metadata = {"location-lat": 27.986065, "location-long": 86.922623, "vehicle_id": "abg"}
 
     # Create calibration
     calibration_spec = create_sensor_calibration(f"Collection {datetime.now()}", [lidar_sensor1], [cam_sensor1, cam_sensor2, cam_sensor3])

@@ -8,7 +8,6 @@ import kognic.io.model.scene.cameras as CM
 from kognic.io.client import KognicIOClient
 from kognic.io.logger import setup_logging
 from kognic.io.model import CreateSceneResponse, Image
-from kognic.io.model.scene.metadata.metadata import MetaData
 
 base_dir = Path(__file__).parent.absolute()
 
@@ -16,13 +15,7 @@ base_dir = Path(__file__).parent.absolute()
 def run(client: KognicIOClient, dryrun: bool = True, **kwargs) -> Optional[CreateSceneResponse]:
     print("Creating Cameras Scene...")
 
-    metadata = MetaData(
-        **{
-            "location-lat": 27.986065,
-            "location-long": 86.922623,
-            "vehicle_id": "abg",
-        }
-    )
+    metadata = {"location-lat": 27.986065, "location-long": 86.922623, "vehicle_id": "abg"}
 
     scene = CM.Cameras(
         external_id=f"cameras-example-{uuid4()}",

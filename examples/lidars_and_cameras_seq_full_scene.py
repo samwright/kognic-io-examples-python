@@ -8,7 +8,6 @@ import kognic.io.model.scene.lidars_and_cameras_sequence as LCSM
 from kognic.io.client import KognicIOClient
 from kognic.io.logger import setup_logging
 from kognic.io.model import CreateSceneResponse, EgoVehiclePose, Image, PointCloud, Position, RotationQuaternion
-from kognic.io.model.scene.metadata.metadata import MetaData
 
 from examples.calibration.calibration import create_sensor_calibration
 
@@ -20,7 +19,7 @@ def run(client: KognicIOClient, dryrun: bool = True) -> Optional[CreateSceneResp
     cam_sensor1 = "RFC01"
     cam_sensor2 = "RFC02"
     cam_sensor3 = "RFC03"
-    metadata = MetaData(**{"location-lat": 27.986065, "location-long": 86.922623, "vehicle_id": "abg"})
+    metadata = {"location-lat": 27.986065, "location-long": 86.922623, "vehicle_id": "abg"}
 
     # Create calibration
     calibration_spec = create_sensor_calibration(f"Collection {datetime.now()}", [lidar_sensor1], [cam_sensor1, cam_sensor2, cam_sensor3])

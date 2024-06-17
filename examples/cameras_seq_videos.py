@@ -6,7 +6,6 @@ import kognic.io.model.scene.cameras_sequence as CSM
 from kognic.io.client import KognicIOClient
 from kognic.io.logger import setup_logging
 from kognic.io.model import VideoFrame
-from kognic.io.model.scene.metadata.metadata import MetaData
 
 
 def run(client: KognicIOClient, dryrun: bool = True, **kwargs):
@@ -14,7 +13,7 @@ def run(client: KognicIOClient, dryrun: bool = True, **kwargs):
 
     sensor1 = "RFC01"
     sensor2 = "RFC02"
-    metadata = MetaData.model_validate({"location-lat": 27.986065, "location-long": 86.922623, "vehicle_id": "abg"})
+    metadata = {"location-lat": 27.986065, "location-long": 86.922623, "vehicle_id": "abg"}
 
     scene = CSM.CamerasSequence(
         external_id=f"camera-seq-videos-example-{uuid4()}",

@@ -8,7 +8,6 @@ import kognic.io.model.scene.aggregated_lidars_and_cameras_seq as ALCSM
 from kognic.io.client import KognicIOClient
 from kognic.io.logger import setup_logging
 from kognic.io.model import CreateSceneResponse, EgoVehiclePose, Image, PointCloud, Position, RotationQuaternion
-from kognic.io.model.scene.metadata.metadata import MetaData
 
 from examples.calibration.calibration import create_sensor_calibration
 
@@ -19,13 +18,7 @@ def run(client: KognicIOClient, dryrun: bool = True, **kwargs) -> Optional[Creat
     lidar_sensor1 = "lidar"
     cam_sensor1 = "RFC01"
     cam_sensor2 = "RFC02"
-    metadata = MetaData.model_validate(
-        {
-            "location-lat": 27.986065,
-            "location-long": 86.922623,
-            "vehicle_id": "abg",
-        }
-    )
+    metadata = {"location-lat": 27.986065, "location-long": 86.922623, "vehicle_id": "abg"}
 
     # Create calibration
     # (Please refer to the API documentation about calibration for more details)

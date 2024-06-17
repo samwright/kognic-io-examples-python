@@ -7,14 +7,13 @@ import kognic.io.model.scene.lidars_sequence as LSM
 from kognic.io.client import KognicIOClient
 from kognic.io.logger import setup_logging
 from kognic.io.model import CreateSceneResponse, PointCloud
-from kognic.io.model.scene.metadata.metadata import MetaData
 
 
 def run(client: KognicIOClient, dryrun: bool = True, **kwargs) -> Optional[CreateSceneResponse]:
     print("Creating Lidar Sequence Scene...")
 
     lidar_sensor1 = "lidar"
-    metadata = MetaData(**{"location-lat": 27.986065, "location-long": 86.922623, "vehicle_id": "abg"})
+    metadata = {"location-lat": 27.986065, "location-long": 86.922623, "vehicle_id": "abg"}
 
     scene = LSM.LidarsSequence(
         external_id=f"lidars-seq-example-{uuid4()}",

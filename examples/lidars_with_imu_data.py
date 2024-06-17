@@ -1,22 +1,22 @@
 from __future__ import absolute_import
 
 import os.path
+from typing import Optional
 from uuid import uuid4
 
 import kognic.io.model.scene.lidars as LM
 from kognic.io.client import KognicIOClient
 from kognic.io.logger import setup_logging
 from kognic.io.model import CreateSceneResponse, PointCloud
-from kognic.io.model.scene.metadata.metadata import MetaData
 
 from examples.imu_data.create_imu_data import create_dummy_imu_data
 
 
-def run(client: KognicIOClient, dryrun: bool = True, **kwargs) -> CreateSceneResponse:
+def run(client: KognicIOClient, dryrun: bool = True, **kwargs) -> Optional[CreateSceneResponse]:
     print("Creating Lidars Scene...")
 
     lidar_sensor1 = "lidar"
-    metadata = MetaData(**{"location-lat": 27.986065, "location-long": 86.922623, "vehicle_id": "abg"})
+    metadata = {"location-lat": 27.986065, "location-long": 86.922623, "vehicle_id": "abg"}
 
     imu_data = create_dummy_imu_data(1557539923, 1557539925, int(1e9))
     examples_path = os.path.dirname(__file__)
