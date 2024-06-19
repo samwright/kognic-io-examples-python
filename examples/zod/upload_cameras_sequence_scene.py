@@ -12,7 +12,7 @@ from zod.constants import Camera as ZodCamera
 from zod.constants import Version as ZodVersion
 from zod.zod_sequences import ZodSequence, ZodSequences
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.WARNING)
 
 LARGE_NUMBER = 1000000
 

@@ -7,7 +7,7 @@ from kognic.io.model import Image, ImageMetadata, PointCloud
 from kognic.io.model.calibration import KannalaCalibration, LidarCalibration, Position, RotationQuaternion, SensorCalibration
 from kognic.io.model.calibration.camera.common import CameraMatrix
 from kognic.io.model.calibration.camera.kannala_calibration import KannalaDistortionCoefficients, UndistortionCoefficients
-from kognic.io.model.ego import EgoVehiclePose, IMUData
+from kognic.io.model.ego import EgoVehiclePose
 from kognic.io.resources.scene.file_data import FileData
 from pandas import DataFrame
 from scipy.spatial.transform import Rotation as R
@@ -17,7 +17,6 @@ from zod.constants import Lidar as ZodLidar
 from zod.data_classes.calibration import Calibration as ZodCalibration
 from zod.data_classes.calibration import CameraCalibration as ZodCameraCalibration
 from zod.data_classes.calibration import LidarCalibration as ZodLidarCalibration
-from zod.data_classes.ego_motion import EgoMotion as ZodEgoMotion
 from zod.data_classes.geometry import Pose as ZodPose
 from zod.data_classes.sensor import CameraFrame as ZodCameraFrame
 from zod.data_classes.sensor import SensorFrame as ZodSensorFrame
@@ -46,18 +45,6 @@ def zod_pose_to_rotation(pose: ZodPose) -> RotationQuaternion:
 
 def convert_to_ego_vehicle_pose(transform: np.array) -> EgoVehiclePose:
     return EgoVehiclePose(position=get_pos(transform), rotation=get_quat(transform))
-
-
-def convert_to_imu_data(transform: np.array, timestamp_ns: int) -> IMUData:
-    return IMUData(position=get_pos(transform), rotation_quaternion=get_quat(transform), timestamp=timestamp_ns)
-
-
-def convert_zod_ego_motion_to_imu_data(zod_ego_motion: ZodEgoMotion) -> list[IMUData]:
-    imu_data = list()
-    for i, ts in enumerate(zod_ego_motion.timestamps):
-        imu = convert_to_imu_data(zod_ego_motion.poses[i], seconds_to_ns(ts))
-        imu_data.append(imu)
-    return imu_data
 
 
 """ Calibration conversion functions """
