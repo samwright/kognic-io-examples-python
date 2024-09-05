@@ -5,12 +5,11 @@ from pathlib import Path
 from uuid import uuid4
 
 import kognic.io.model.scene.lidars_and_cameras as LC
+from examples.calibration.calibration import create_sensor_calibration
 from kognic.io.client import KognicIOClient
 from kognic.io.logger import setup_logging
 from kognic.io.model import CreateSceneResponse, Image, PointCloud
 from kognic.io.resources.scene.file_data import FileData
-
-from examples.calibration.calibration import create_sensor_calibration
 
 
 def run(client: KognicIOClient, dryrun: bool = True, **kwargs) -> CreateSceneResponse:

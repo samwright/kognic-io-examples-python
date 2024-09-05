@@ -5,11 +5,10 @@ from typing import Optional
 from uuid import uuid4
 
 import kognic.io.model.scene.lidars as LM
+from examples.imu_data.create_imu_data import create_dummy_imu_data
 from kognic.io.client import KognicIOClient
 from kognic.io.logger import setup_logging
 from kognic.io.model import CreateSceneResponse, PointCloud
-
-from examples.imu_data.create_imu_data import create_dummy_imu_data
 
 
 def run(client: KognicIOClient, dryrun: bool = True, **kwargs) -> Optional[CreateSceneResponse]:

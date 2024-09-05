@@ -7,12 +7,11 @@ from uuid import uuid4
 
 import kognic.io.model.scene.lidars_and_cameras_sequence as LCSM
 import kognic.openlabel.models as OLM
+from examples.calibration.calibration import create_sensor_calibration
 from kognic.io.client import KognicIOClient
 from kognic.io.logger import setup_logging
 from kognic.io.model import Image, PointCloud
 from kognic.io.tools.input_creation import InputCreationResult, SceneWithPreAnnotation, create_inputs
-
-from examples.calibration.calibration import create_sensor_calibration
 
 
 def run(
