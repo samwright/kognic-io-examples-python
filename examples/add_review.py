@@ -17,7 +17,7 @@ def run(client: KognicIOClient, open_label_uuid: str, error_type_id: str) -> Rev
         feedback_items=[
             AddFeedbackItem(
                 sensor_id="<the id/name of the sensor>",
-                frame_id="<the id of the frame>",
+                frame_id="<the id of the frame>",  # in our OpenLabel file this is frame.frame_properties.external_id
                 object_id="<the id of the object>",
                 pin=AddFeedbackItemPin(x=0.0, y=0.0, z=0.0),
                 description="I post this via the Python client",
