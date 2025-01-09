@@ -9,4 +9,4 @@ To install `kognic-io` with pip run `pip install kognic-io`.
 
 ## Documentation & Getting Started Guide
 
-Documentation about how to use the library can be found [here](https://developers.kognic.com/).
+Documentation about how to use the library can be found [here](https://docs.kognic.com).
